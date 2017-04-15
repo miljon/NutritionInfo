@@ -20,21 +20,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        searchView.setOnLeftMenuClickListener(new FloatingSearchView.OnLeftMenuClickListener() {
-            @Override
-            public void onMenuOpened() {
-                Log.d("MMU", "opened");
-            }
-
-            @Override
-            public void onMenuClosed() {
-                Log.d("MMU", "closed");
-            }
-        });
         searchView.setOnQueryChangeListener(new FloatingSearchView.OnQueryChangeListener() {
             @Override
             public void onSearchTextChanged(String oldQuery, final String newQuery) {
 
+                Log.d("MMURAWSKI: ", "old: "+oldQuery+", new: "+newQuery );
                 //get suggestions based on newQuery
 
                 //pass them on to the search view
