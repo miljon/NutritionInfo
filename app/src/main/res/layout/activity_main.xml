@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,10 +7,12 @@
     android:layout_height="match_parent"
     tools:context="com.mwmurawski.nutritioninfo.activity.MainActivity">
 
+    <include layout="@layout/recyclerview_layout"/>
+
     <com.arlib.floatingsearchview.FloatingSearchView
         android:id="@+id/floating_search_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         app:floatingSearch_searchBarMarginLeft="@dimen/search_view_inset"
         app:floatingSearch_searchBarMarginTop="@dimen/search_view_inset"
         app:floatingSearch_searchBarMarginRight="@dimen/search_view_inset"
@@ -19,6 +21,8 @@
         app:floatingSearch_showSearchKey="false"
         app:floatingSearch_leftActionMode="showSearch"
         app:floatingSearch_menu="@menu/menu_main"
-        app:floatingSearch_close_search_on_keyboard_dismiss="true"/>
+        app:floatingSearch_close_search_on_keyboard_dismiss="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
 
-</android.support.constraint.ConstraintLayout>
+</RelativeLayout>

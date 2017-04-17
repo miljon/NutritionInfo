@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.arlib.floatingsearchview.FloatingSearchView;
+import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
 import com.mwmurawski.nutritioninfo.R;
 
 import butterknife.BindView;
@@ -20,15 +21,27 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        searchView.setOnQueryChangeListener(new FloatingSearchView.OnQueryChangeListener() {
+//        searchView.setOnQueryChangeListener(new FloatingSearchView.OnQueryChangeListener() {
+//            @Override
+//            public void onSearchTextChanged(String oldQuery, final String newQuery) {
+//
+//                Log.d("MMURAWSKI: ", "old: "+oldQuery+", new: "+newQuery );
+//                //get suggestions based on newQuery
+//
+//                //pass them on to the search view
+////                searchView.swapSuggestions(newSuggestions);
+//            }
+//        });
+
+        searchView.setOnSearchListener(new FloatingSearchView.OnSearchListener() {
             @Override
-            public void onSearchTextChanged(String oldQuery, final String newQuery) {
+            public void onSuggestionClicked(SearchSuggestion searchSuggestion) {
 
-                Log.d("MMURAWSKI: ", "old: "+oldQuery+", new: "+newQuery );
-                //get suggestions based on newQuery
+            }
 
-                //pass them on to the search view
-//                searchView.swapSuggestions(newSuggestions);
+            @Override
+            public void onSearchAction(String currentQuery) {
+
             }
         });
 
