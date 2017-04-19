@@ -1,4 +1,4 @@
-package com.mwmurawski.nutritioninfo.config;
+package com.mwmurawski.nutritioninfo.presenter.module;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

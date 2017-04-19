@@ -7,12 +7,21 @@
     android:layout_height="match_parent"
     tools:context="com.mwmurawski.nutritioninfo.activity.MainActivity">
 
-    <include layout="@layout/recyclerview_layout"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="60dp"
+        android:clipToPadding="false"
+        >
+
+        <include layout="@layout/recyclerview_layout"/>
+
+    </LinearLayout>
 
     <com.arlib.floatingsearchview.FloatingSearchView
         android:id="@+id/floating_search_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         app:floatingSearch_searchBarMarginLeft="@dimen/search_view_inset"
         app:floatingSearch_searchBarMarginTop="@dimen/search_view_inset"
         app:floatingSearch_searchBarMarginRight="@dimen/search_view_inset"
@@ -24,5 +33,6 @@
         app:floatingSearch_close_search_on_keyboard_dismiss="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true" />
+
 
 </RelativeLayout>

@@ -29,9 +29,9 @@ public class SearchList {
     @SerializedName("sort")
     @Expose
     private String sort;
-    @SerializedName("searchItem")
+    @SerializedName("item")
     @Expose
-    private java.util.List<SearchItem> searchItem = null;
+    private java.util.List<SearchItem> searchItems;
 
     public String getQ() {
         return q;
@@ -97,12 +97,12 @@ public class SearchList {
         this.sort = sort;
     }
 
-    public java.util.List<SearchItem> getSearchItem() {
-        return searchItem;
+    public java.util.List<SearchItem> getSearchItems() {
+        return searchItems;
     }
 
-    public void setSearchItem(java.util.List<SearchItem> searchItem) {
-        this.searchItem = searchItem;
+    public void setSearchItems(java.util.List<SearchItem> searchItems) {
+        this.searchItems = searchItems;
     }
 
 }
