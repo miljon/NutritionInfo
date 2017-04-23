@@ -13,6 +13,7 @@ import com.mwmurawski.nutritioninfo.cons.Cons;
 import com.mwmurawski.nutritioninfo.model.search.SearchItem;
 import com.mwmurawski.nutritioninfo.model.search.SearchResult;
 import com.mwmurawski.nutritioninfo.model.service.SearchService;
+import com.mwmurawski.nutritioninfo.presenter.MainActivityPresenter;
 import com.mwmurawski.nutritioninfo.presenter.component.DaggerNetworkComponent;
 import com.mwmurawski.nutritioninfo.view.recyclerview.ItemAdapter;
 
@@ -23,20 +24,25 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 
 public class MainActivity extends AppCompatActivity {
 
-    @BindView(R.id.floating_search_view) FloatingSearchView searchView;
+    @Inject Retrofit retrofit;
 
+    @BindView(R.id.floating_search_view) FloatingSearchView searchView;
     @BindView(R.id.main_recyclerview) RecyclerView recyclerView;
 
-    @Inject Retrofit retrofit;
+    MainActivityPresenter mainActivityPresenter;
+
     SearchResult result;
     List<SearchItem> itemsList;
+
+    CompositeDisposable compositeDisposable;
+
     ItemAdapter itemAdapter;
     private String queryString = null;
 
@@ -47,10 +53,14 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         DaggerNetworkComponent.create().inject(this);
 
+        mainActivityPresenter = new MainActivityPresenter();
+
+        compositeDisposable = new CompositeDisposable();
+
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
 
-        itemAdapter = new ItemAdapter(new ArrayList<SearchItem>());
+        itemAdapter = new ItemAdapter(new ArrayList<>());
         recyclerView.setAdapter(itemAdapter);
 
         search();
@@ -66,57 +76,47 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFocusCleared() {
                 if (queryString != null && !queryString.isEmpty()) {
-                    SearchService searchService = retrofit.create(SearchService.class);
-                    Call<SearchResult> resultCall = searchService.search(Cons.API_KEY, "json", queryString);
-                    resultCall.enqueue(new Callback<SearchResult>() {
-                        @Override
-                        public void onResponse(Call<SearchResult> call, final Response<SearchResult> response) {
-                            if (response.code() == 200) {
-                                result = response.body();
-                                if (result != null) {
-                                    itemsList = result.getSearchList().getSearchItems();
-
-                                    Runnable runnable = new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            itemAdapter.setDataAdapter(itemsList);
-                                            itemAdapter.notifyDataSetChanged();
-                                        }
-                                    };
-                                    if (itemsList != null && !itemsList.isEmpty()) {
-                                        runOnUiThread(runnable);
-                                    } else {
-                                        toast("Empty list of items");
-                                    }
-                                } else {
-                                    toast("Empty response body");
-                                }
-                            } else {
-                                toast("Response error: " + response.code());
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<SearchResult> call, Throwable t) {
-                            toast("Failure while getting response");
-                        }
-                    });
-
-
+                    loadResponse(queryString);
                 } else {
                     toast("Empty search text");
                 }
             }
-
         });
 
-        searchView.setOnQueryChangeListener(new FloatingSearchView.OnQueryChangeListener() {
-            @Override
-            public void onSearchTextChanged(String oldQuery, final String newQuery) {
-                queryString = newQuery;
-                Log.d("MMURAWSKI: ", "old: " + oldQuery + ", new: " + newQuery);
-            }
-        });
+        searchView.setOnQueryChangeListener((oldQuery, newQuery) -> queryString = newQuery);
+    }
+
+    private void loadResponse(final String queryString) {
+//        SearchService searchService = retrofit.create(SearchService.class);
+
+//        Single<SearchResult> resultSingle = searchService.search(Cons.API_KEY, "json", queryString);
+//        Observable<SearchResult> resultObservable = searchService.search(Cons.API_KEY, "json", queryString);
+
+//        compositeDisposable.add(resultSingle
+//                .subscribeOn(Schedulers.newThread())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(this::handleResponse, this::handleError));
+
+        retrofit.create(SearchService.class)
+                .search(Cons.API_KEY, "json", queryString)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::handleResponse, this::handleError);
+
+    }
+
+    private void handleResponse(SearchResult searchResult) {
+        if (searchResult != null && searchResult.getSearchList() != null && searchResult.getSearchList().getSearchItems() != null && !searchResult.getSearchList().getSearchItems().isEmpty()) {
+            itemsList = searchResult.getSearchList().getSearchItems();
+            itemAdapter.setDataAdapter(itemsList);
+            itemAdapter.notifyDataSetChanged();
+        } else {
+            toast("Response error");
+        }
+    }
+
+    private void handleError(Throwable throwable) {
+        Log.e("Network error: ", throwable.getMessage());
     }
 
     private void toast(String message) {

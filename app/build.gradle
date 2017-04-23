@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
@@ -10,6 +9,10 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        jackOptions {
+            enabled true
+        }
     }
     buildTypes {
         release {
@@ -20,7 +23,20 @@ android {
     buildTypes.each {
         it.buildConfigField('String', 'API_KEY', API_KEY)
     }
+
+    compileOptions {
+        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
+    }
 }
+
+//retrolambda {
+//    jdk System.getenv('JAVA8_HOME')
+//    oldJdk System.getenv('JAVA7_HOME')
+//    jvmArgs '-arg1', '-arg2'
+//    defaultMethods false
+//    incremental true
+//}
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
@@ -40,6 +56,7 @@ dependencies {
     //retrofit2
     compile 'com.squareup.retrofit2:retrofit:2.2.0'
     compile 'com.squareup.retrofit2:converter-gson:2.2.0'
+    compile 'com.squareup.retrofit2:adapter-rxjava2:2.2.0'
 
     //dagger2
     compile 'com.google.dagger:dagger:2.10'
@@ -49,6 +66,11 @@ dependencies {
     compile 'com.jakewharton:butterknife:8.5.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
 
+    //rxJava and rxAndroid and retrolambda
+    compile 'io.reactivex.rxjava2:rxjava:2.0.9'
+    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
+
+//    compile 'net.orfjackal.retrolambda:retrolambda:2.5.1'
 
     compile 'com.github.arimorty:floatingsearchview:2.0.3'
 }
