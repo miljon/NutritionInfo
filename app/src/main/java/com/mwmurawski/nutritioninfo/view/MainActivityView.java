@@ -8,13 +8,17 @@ import java.util.List;
  * Created by Mij on 2017-04-23.
  */
 
-public interface MainActivityView<T> extends BaseView{
+public interface MainActivityView{
+    
+    void makeToast(String toastText);
 
-    void loadListOfItems(List<SearchItem> itemList);
+    void putListToAdapter(List<SearchItem> searchItems);
 
-    void showProgressBar();
-
-    void loadingComplete();
-
-    void loadingError();
+//    void loadListOfItems(List<SearchItem> itemList);
+//
+//    void showProgressBar();
+//
+//    void loadingComplete();
+//
+//    void loadingError();
 }

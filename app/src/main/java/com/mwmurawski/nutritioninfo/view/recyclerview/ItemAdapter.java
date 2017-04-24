@@ -17,8 +17,8 @@ import butterknife.ButterKnife;
 
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder> {
 
-    List<SearchItem> listOfItems;
     private final String COMA_SEPARATOR = ",";
+    private List<SearchItem> listOfItems;
 
     public ItemAdapter(List<SearchItem> listOfItems) {
         this.listOfItems = listOfItems;
