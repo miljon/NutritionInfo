@@ -33,11 +33,11 @@ public class MainActivityPresenter {
     private List<SearchItem> itemList;
 
     public MainActivityPresenter(MainActivityView mainActivityView) {
-        onAttachView(mainActivityView);
+        attachView(mainActivityView);
         DaggerNetworkComponent.create().inject(this);
     }
 
-    public void onAttachView(MainActivityView mainActivityView) {
+    public void attachView(MainActivityView mainActivityView) {
         this.mainActivityView = mainActivityView;
     }
 
@@ -45,13 +45,13 @@ public class MainActivityPresenter {
         return mainActivityView != null;
     }
 
-    public void onDetachView() {
+    public void detachView() {
         mainActivityView = null;
     }
 
     private void loadResponse(final String queryString) {
         compositeDisposable.add(retrofit.create(SearchService.class)
-                .search(Cons.API_KEY, "json", queryString)
+                .search(Cons.API_KEY, Cons.JSON, queryString)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::handleResponse, this::handleError));

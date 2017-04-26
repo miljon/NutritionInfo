@@ -57,13 +57,13 @@ public class MainActivity extends AppCompatActivity implements MainActivityView{
     @Override
     protected void onResume() {
         super.onResume();
-        if(!presenter.isAttachedToView()) presenter.onAttachView(this);
+        if(!presenter.isAttachedToView()) presenter.attachView(this);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        presenter.onDetachView();
+        presenter.detachView();
     }
 
     @Override
@@ -101,7 +101,6 @@ public class MainActivity extends AppCompatActivity implements MainActivityView{
 
     @Override
     public void putListToAdapter(List<SearchItem> searchItems) {
-//        itemAdapter = new ItemAdapter(searchItems);
         itemAdapter.setDataAdapter(searchItems);
         recyclerView.setAdapter(itemAdapter);
     }
