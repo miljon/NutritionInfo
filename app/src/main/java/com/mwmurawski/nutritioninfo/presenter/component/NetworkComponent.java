@@ -1,6 +1,6 @@
 package com.mwmurawski.nutritioninfo.presenter.component;
 
-import com.mwmurawski.nutritioninfo.presenter.MainActivityPresenter;
+import com.mwmurawski.nutritioninfo.presenter.presenter.MainActivityPresenter;
 import com.mwmurawski.nutritioninfo.presenter.module.NetworkModule;
 
 import javax.inject.Singleton;

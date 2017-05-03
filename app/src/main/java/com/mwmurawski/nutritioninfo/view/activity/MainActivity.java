@@ -1,20 +1,28 @@
 package com.mwmurawski.nutritioninfo.view.activity;
 
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.arlib.floatingsearchview.FloatingSearchView;
 import com.mwmurawski.nutritioninfo.R;
 import com.mwmurawski.nutritioninfo.model.search.SearchItem;
-import com.mwmurawski.nutritioninfo.presenter.MainActivityPresenter;
-import com.mwmurawski.nutritioninfo.view.MainActivityView;
+import com.mwmurawski.nutritioninfo.presenter.presenter.MainActivityPresenter;
+import com.mwmurawski.nutritioninfo.presenter.component.DaggerMainActivityPresenterComponent;
+import com.mwmurawski.nutritioninfo.presenter.component.MainActivityPresenterComponent;
+import com.mwmurawski.nutritioninfo.presenter.module.MainActivityPresenterModule;
+import com.mwmurawski.nutritioninfo.view.interfaces.MainActivityView;
 import com.mwmurawski.nutritioninfo.view.recyclerview.ItemAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -25,9 +33,13 @@ public class MainActivity extends AppCompatActivity implements MainActivityView{
     @BindView(R.id.floating_search_view) FloatingSearchView searchView;
     @BindView(R.id.main_recyclerview) RecyclerView recyclerView;
 
-    private final CompositeDisposable compositeDisposable = new CompositeDisposable();
+    @BindView(R.id.progress_bar) ProgressBar progressBar;
 
-    private MainActivityPresenter presenter;
+    @BindView(R.id.swipe_refresh_layout) SwipeRefreshLayout swipeRefreshLayout;
+
+    @Inject MainActivityPresenter presenter;
+
+    private final CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     private ItemAdapter itemAdapter;
 
@@ -37,15 +49,20 @@ public class MainActivity extends AppCompatActivity implements MainActivityView{
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        presenter = new MainActivityPresenter(this);
+        MainActivityPresenterComponent component = DaggerMainActivityPresenterComponent.builder()
+                .mainActivityPresenterModule(new MainActivityPresenterModule(this))
+                .build();
+
+        presenter = component.getPresenter();
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
 
-        itemAdapter = new ItemAdapter(new ArrayList<>());
+        itemAdapter = new ItemAdapter(new ArrayList<SearchItem>());
         recyclerView.setAdapter(itemAdapter);
 
         setSearchListener();
+        setSwipeSearchListener();
     }
 
     @Override
@@ -91,7 +108,27 @@ public class MainActivity extends AppCompatActivity implements MainActivityView{
             }
         });
 
-        searchView.setOnQueryChangeListener((oldQuery, newQuery) -> presenter.setQueryString(newQuery));
+        searchView.setOnQueryChangeListener(new FloatingSearchView.OnQueryChangeListener() {
+            @Override
+            public void onSearchTextChanged(String oldQuery, String newQuery) {
+                presenter.setQueryString(newQuery);
+            }
+        });
+    }
+
+
+    private void setSwipeSearchListener() {
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                presenter.refreshList();
+            }
+        });
+    }
+
+    @Override
+    public void setSwipeRefreshingToFalse(){
+        swipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
@@ -103,5 +140,16 @@ public class MainActivity extends AppCompatActivity implements MainActivityView{
     public void putListToAdapter(List<SearchItem> searchItems) {
         itemAdapter.setDataAdapter(searchItems);
         recyclerView.setAdapter(itemAdapter);
+    }
+
+    @Override
+    public void showProgressBar() {
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideProgressBar() {
+        progressBar.setVisibility(View.GONE);
+
     }
 }

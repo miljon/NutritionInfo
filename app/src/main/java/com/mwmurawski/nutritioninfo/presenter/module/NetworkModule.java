@@ -17,14 +17,14 @@ public class NetworkModule {
 
     @Provides
     @Singleton
-    public Gson provideGson() {
+    Gson provideGson() {
         GsonBuilder gsonBuilder = new GsonBuilder();
         return gsonBuilder.create();
     }
 
     @Provides
     @Singleton
-    public Retrofit provideRetrofit(Gson gson) {
+    Retrofit provideRetrofit(Gson gson) {
         return new Retrofit.Builder()
                 .baseUrl(Cons.BASE_URL)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
