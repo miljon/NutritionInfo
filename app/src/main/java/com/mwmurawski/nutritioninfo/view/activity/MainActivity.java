@@ -12,10 +12,9 @@ import android.widget.Toast;
 import com.arlib.floatingsearchview.FloatingSearchView;
 import com.mwmurawski.nutritioninfo.R;
 import com.mwmurawski.nutritioninfo.model.search.SearchItem;
-import com.mwmurawski.nutritioninfo.presenter.presenter.MainActivityPresenter;
 import com.mwmurawski.nutritioninfo.presenter.component.DaggerMainActivityPresenterComponent;
-import com.mwmurawski.nutritioninfo.presenter.component.MainActivityPresenterComponent;
 import com.mwmurawski.nutritioninfo.presenter.module.MainActivityPresenterModule;
+import com.mwmurawski.nutritioninfo.presenter.presenter.MainActivityPresenter;
 import com.mwmurawski.nutritioninfo.view.interfaces.MainActivityView;
 import com.mwmurawski.nutritioninfo.view.recyclerview.ItemAdapter;
 
@@ -49,11 +48,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityView{
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        MainActivityPresenterComponent component = DaggerMainActivityPresenterComponent.builder()
-                .mainActivityPresenterModule(new MainActivityPresenterModule(this))
-                .build();
-
-        presenter = component.getPresenter();
+        DaggerMainActivityPresenterComponent.builder().mainActivityPresenterModule(new MainActivityPresenterModule(this)).build().inject(this);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
