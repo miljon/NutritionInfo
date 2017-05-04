@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityView{
 
             @Override
             public void onFocusCleared() {
-                presenter.tryToLoadResponse();
+                presenter.loadResponse();
             }
         });
 

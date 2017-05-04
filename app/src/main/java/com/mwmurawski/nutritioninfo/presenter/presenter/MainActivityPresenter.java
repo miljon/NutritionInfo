@@ -2,11 +2,11 @@ package com.mwmurawski.nutritioninfo.presenter.presenter;
 
 import android.util.Log;
 
-import com.mwmurawski.nutritioninfo.cons.Cons;
+import com.mwmurawski.nutritioninfo.model.repository.SearchRepository;
 import com.mwmurawski.nutritioninfo.model.search.SearchItem;
 import com.mwmurawski.nutritioninfo.model.search.SearchResult;
-import com.mwmurawski.nutritioninfo.model.service.SearchService;
 import com.mwmurawski.nutritioninfo.presenter.component.DaggerNetworkComponent;
+import com.mwmurawski.nutritioninfo.presenter.component.DaggerRepositoryComponent;
 import com.mwmurawski.nutritioninfo.view.interfaces.MainActivityView;
 
 import java.util.List;
@@ -24,6 +24,7 @@ public class MainActivityPresenter {
 
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
     @Inject Retrofit retrofit;
+    @Inject SearchRepository searchRepository;
     private String queryString = null;
 
     private MainActivityView mainActivityView;
@@ -34,6 +35,7 @@ public class MainActivityPresenter {
     public MainActivityPresenter(MainActivityView mainActivityView) {
         attachView(mainActivityView);
         DaggerNetworkComponent.create().inject(this);
+        DaggerRepositoryComponent.create().inject(this);
     }
 
 
@@ -52,29 +54,32 @@ public class MainActivityPresenter {
     }
 
 
-    private void loadResponse(final String queryString) {
-        mainActivityView.showProgressBar();
-        compositeDisposable.add(retrofit.create(SearchService.class)
-                .search(Cons.API_KEY, Cons.JSON, queryString)
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableSingleObserver<SearchResult>() {
-                    @Override
-                    public void onSuccess(@NonNull SearchResult searchResult) {
-                        handleResponse(searchResult);
-                    }
+    public void loadResponse() {
+        if (queryString != null && !queryString.isEmpty()) {
+            mainActivityView.showProgressBar();
+            compositeDisposable.add(searchRepository.getSearchResult(queryString)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeWith(new DisposableSingleObserver<SearchResult>() {
+                        @Override
+                        public void onSuccess(@NonNull SearchResult searchResult) {
+                            handleResponse(searchResult);
+                        }
 
-                    @Override
-                    public void onError(@NonNull Throwable e) {
-                        handleError(e);
-                    }
-                }));
+                        @Override
+                        public void onError(@NonNull Throwable e) {
+                            handleError(e);
+                        }
+                    }));
+        } else {
+            makeToast("Error: empty text");
+        }
     }
 
 
     private void handleError(Throwable throwable) {
         makeToast("Error: network problem.");
-        Log.e("MMU","Network problem e: "+throwable.getLocalizedMessage());
+        Log.e("MMU", "Network problem e: " + throwable.getLocalizedMessage());
     }
 
 
@@ -97,19 +102,11 @@ public class MainActivityPresenter {
     }
 
 
-    public void tryToLoadResponse() {
-        if (queryString != null && !queryString.isEmpty()) {
-            loadResponse(queryString);
-        } else {
-            makeToast("Error: empty text");
-        }
-    }
-
     public void setQueryString(String queryString) {
         this.queryString = queryString;
     }
 
     public void refreshList() {
-        tryToLoadResponse();
+        loadResponse();
     }
 }
