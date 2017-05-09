@@ -8,8 +8,8 @@ import java.util.List;
  * Created by Mij on 2017-04-23.
  */
 
-public interface MainActivityView{
-    
+public interface MainActivityView {
+
     void makeToast(String toastText);
 
     void putListToAdapter(List<SearchItem> searchItems);

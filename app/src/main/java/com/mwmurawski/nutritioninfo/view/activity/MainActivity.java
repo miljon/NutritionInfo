@@ -15,10 +15,9 @@ import com.mwmurawski.nutritioninfo.model.search.SearchItem;
 import com.mwmurawski.nutritioninfo.presenter.component.DaggerMainActivityPresenterComponent;
 import com.mwmurawski.nutritioninfo.presenter.module.MainActivityPresenterModule;
 import com.mwmurawski.nutritioninfo.presenter.presenter.MainActivityPresenter;
+import com.mwmurawski.nutritioninfo.view.interfaces.ItemAdapterInterface;
 import com.mwmurawski.nutritioninfo.view.interfaces.MainActivityView;
-import com.mwmurawski.nutritioninfo.view.recyclerview.ItemAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -27,20 +26,21 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.disposables.CompositeDisposable;
 
-public class MainActivity extends AppCompatActivity implements MainActivityView{
+public class MainActivity extends AppCompatActivity implements MainActivityView, ItemAdapterInterface {
 
-    @BindView(R.id.floating_search_view) FloatingSearchView searchView;
-    @BindView(R.id.main_recyclerview) RecyclerView recyclerView;
-
-    @BindView(R.id.progress_bar) ProgressBar progressBar;
-
-    @BindView(R.id.swipe_refresh_layout) SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.floating_search_view)    FloatingSearchView   searchView;
+    @BindView(R.id.main_recyclerview)       RecyclerView         recyclerView;
+    @BindView(R.id.progress_bar)            ProgressBar          progressBar;
+    @BindView(R.id.swipe_refresh_layout)    SwipeRefreshLayout   swipeRefreshLayout;
 
     @Inject MainActivityPresenter presenter;
+    @Inject ItemAdapterInterface itemAdapter;
 
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
 
-    private ItemAdapter itemAdapter;
+    /*
+    ________LIFE CYCLE METHODS________
+     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,8 +53,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityView{
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
 
-        itemAdapter = new ItemAdapter(new ArrayList<SearchItem>());
-        recyclerView.setAdapter(itemAdapter);
+        recyclerView.setAdapter((RecyclerView.Adapter) itemAdapter);
 
         setSearchListener();
         setSwipeSearchListener();
@@ -92,6 +91,10 @@ public class MainActivity extends AppCompatActivity implements MainActivityView{
         compositeDisposable.clear();
     }
 
+    /*
+    ________ CUSTOM METHODS ________
+     */
+
     private void setSearchListener() {
         searchView.setOnFocusChangeListener(new FloatingSearchView.OnFocusChangeListener() {
             @Override
@@ -121,6 +124,10 @@ public class MainActivity extends AppCompatActivity implements MainActivityView{
         });
     }
 
+    /*
+    ________PRESENTER METHODS________
+     */
+
     @Override
     public void setSwipeRefreshingToFalse(){
         swipeRefreshLayout.setRefreshing(false);
@@ -133,8 +140,8 @@ public class MainActivity extends AppCompatActivity implements MainActivityView{
 
     @Override
     public void putListToAdapter(List<SearchItem> searchItems) {
-        itemAdapter.setDataAdapter(searchItems);
-        recyclerView.setAdapter(itemAdapter);
+        itemAdapter.setData(searchItems);
+        recyclerView.setAdapter((RecyclerView.Adapter) itemAdapter);
     }
 
     @Override
@@ -145,6 +152,11 @@ public class MainActivity extends AppCompatActivity implements MainActivityView{
     @Override
     public void hideProgressBar() {
         progressBar.setVisibility(View.GONE);
+
+    }
+
+    @Override
+    public void setData(List<SearchItem> listOfItems) {
 
     }
 }

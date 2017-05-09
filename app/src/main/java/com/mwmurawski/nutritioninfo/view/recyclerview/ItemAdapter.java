@@ -9,40 +9,59 @@ import android.widget.TextView;
 
 import com.mwmurawski.nutritioninfo.R;
 import com.mwmurawski.nutritioninfo.model.search.SearchItem;
+import com.mwmurawski.nutritioninfo.presenter.presenter.MainActivityPresenter;
+import com.mwmurawski.nutritioninfo.view.interfaces.ItemAdapterInterface;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder> {
+public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder> implements ItemAdapterInterface{
 
-    private final String COMA_SEPARATOR = ",";
+    /**
+     * ViewHolder for Item
+     */
+    static class ItemViewHolder extends RecyclerView.ViewHolder {
+
+        @Nullable @BindView(R.id.maintext_line1) TextView mainText1;
+
+        public ItemViewHolder(View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+        }
+    }
+
+    //ITEM ADAPTER CLASS
     private List<SearchItem> listOfItems;
+    private MainActivityPresenter presenter;
 
-    public ItemAdapter(List<SearchItem> listOfItems) {
+//    @Inject ItemAdapterPresenter itemAdapterPresenter;
+
+    public ItemAdapter(List<SearchItem> listOfItems, MainActivityPresenter presenter) {
         this.listOfItems = listOfItems;
+        this.presenter = presenter;
+//        DaggerItemAdapterPresenterComponent.builder().itemAdapterPresenterModule(new ItemAdapterPresenterModule(this)).build().inject(this);
     }
 
     @Override
     public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_view, parent, false);
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                presenter.makeToast("Item was clicked. ID: "+view.getId());
+            }
+        });
         return new ItemViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(ItemViewHolder holder, int position) {
-        SearchItem item = listOfItems.get(position);
-        String[] names = getNamesArray(item.getName());
-
-        if (holder.mainText1 != null && holder.mainText2 != null) {
-            holder.mainText1.setText(names[0]);
-            holder.mainText2.setText(names[1]);
+        if (holder.mainText1 != null) {
+            SearchItem item = listOfItems.get(position);
+            holder.mainText1.setText(presenter.formatNameToAdapter(item.getName()));
         }
-    }
-
-    public void setDataAdapter(List<SearchItem> listOfItems){
-        this.listOfItems = listOfItems;
     }
 
     @Override
@@ -50,18 +69,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
         return listOfItems.size();
     }
 
-    private String[] getNamesArray(String fullName) {
-        return fullName.split(COMA_SEPARATOR);
-    }
-
-    static class ItemViewHolder extends RecyclerView.ViewHolder {
-
-        @Nullable @BindView(R.id.maintext_line1) TextView mainText1;
-        @Nullable @BindView(R.id.maintext_line2) TextView mainText2;
-
-        public ItemViewHolder(View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
-        }
+    public void setData(List<SearchItem> listOfItems){
+        this.listOfItems = listOfItems;
     }
 }

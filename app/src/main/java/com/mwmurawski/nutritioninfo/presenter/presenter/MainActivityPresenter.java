@@ -23,9 +23,11 @@ import retrofit2.Retrofit;
 public class MainActivityPresenter {
 
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
+
     @Inject Retrofit retrofit;
     @Inject SearchRepository searchRepository;
     private String queryString = null;
+
 
     private MainActivityView mainActivityView;
 
@@ -68,7 +70,7 @@ public class MainActivityPresenter {
 
                         @Override
                         public void onError(@NonNull Throwable e) {
-                            handleError(e);
+                            handleError(e, "network problem");
                         }
                     }));
         } else {
@@ -77,9 +79,9 @@ public class MainActivityPresenter {
     }
 
 
-    private void handleError(Throwable throwable) {
-        makeToast("Error: network problem.");
-        Log.e("MMU", "Network problem e: " + throwable.getLocalizedMessage());
+    private void handleError(Throwable throwable, String additionalInfo) {
+        makeToast("Error: "+additionalInfo);
+        Log.e("MMU", "Error, e: " + throwable.getLocalizedMessage());
     }
 
 
@@ -90,14 +92,14 @@ public class MainActivityPresenter {
                 && !searchResult.getSearchList().getSearchItems().isEmpty()) {
             mainActivityView.putListToAdapter(searchResult.getSearchList().getSearchItems());
         } else {
-            makeToast("Error: empty response");
+            handleError(new Throwable("Empty response"), "empty response");
         }
         mainActivityView.hideProgressBar();
         mainActivityView.setSwipeRefreshingToFalse();
     }
 
 
-    private void makeToast(String toastText) {
+    public void makeToast(String toastText) {
         mainActivityView.makeToast(toastText);
     }
 
@@ -108,5 +110,20 @@ public class MainActivityPresenter {
 
     public void refreshList() {
         loadResponse();
+    }
+
+    /**
+     * Random json output:
+     * "name": "PLUM, MASHUPS, ORGANIC APPLE SAUCE + STRAWBERRIES & BANANAS, STRAWBERRY BANANA!, UPC: 846675002198"
+     * @param name read from json
+     * @return formatted string with new line for every coma, if line contains "UPC:" then it is
+     */
+    public String formatNameToAdapter(String name){
+        StringBuilder sb = new StringBuilder();
+        String[] nameLines = name.split(",");
+        for (int i = 0; i < nameLines.length-1; i++){
+            if(!nameLines[i].contains("UPC:")) sb.append(nameLines[i].trim()).append("\n");
+        }
+        return sb.toString();
     }
 }

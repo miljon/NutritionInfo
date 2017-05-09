@@ -22,18 +22,18 @@
         style="@style/itemtext"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:text="Peanut Butter"
+        tools:text="Peanut Butter\nSome Firm\nMore info"
         />
 
-    <TextView
-        android:id="@+id/maintext_line2"
-        style="@style/itemtext"
-        android:layout_marginTop="5dp"
-        android:layout_below="@id/maintext_line1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:text="Some fancy firm"
-        />
+    <!--<TextView-->
+        <!--android:id="@+id/maintext_line2"-->
+        <!--style="@style/itemtext"-->
+        <!--android:layout_marginTop="5dp"-->
+        <!--android:layout_below="@id/maintext_line1"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--tools:text="Some fancy firm"-->
+        <!--/>-->
 
     </RelativeLayout>
 </android.support.v7.widget.CardView>
