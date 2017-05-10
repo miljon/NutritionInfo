@@ -1,4 +1,5 @@
 package com.mwmurawski.nutritioninfo.view.interfaces;
 
-public interface BaseInterface {
+public interface BaseView {
+    void initLayout();
 }

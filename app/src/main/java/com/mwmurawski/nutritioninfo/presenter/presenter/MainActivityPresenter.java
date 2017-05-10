@@ -20,7 +20,7 @@ import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 
-public class MainActivityPresenter {
+public class MainActivityPresenter extends BasePresenter<MainActivityView>{
 
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
 
@@ -34,8 +34,7 @@ public class MainActivityPresenter {
     private List<SearchItem> itemList;
 
 
-    public MainActivityPresenter(MainActivityView mainActivityView) {
-        attachView(mainActivityView);
+    public MainActivityPresenter() {
         DaggerNetworkComponent.create().inject(this);
         DaggerRepositoryComponent.create().inject(this);
     }

@@ -2,7 +2,6 @@ package com.mwmurawski.nutritioninfo.view.activity;
 
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -13,7 +12,6 @@ import com.arlib.floatingsearchview.FloatingSearchView;
 import com.mwmurawski.nutritioninfo.R;
 import com.mwmurawski.nutritioninfo.model.search.SearchItem;
 import com.mwmurawski.nutritioninfo.presenter.component.DaggerMainActivityPresenterComponent;
-import com.mwmurawski.nutritioninfo.presenter.module.MainActivityPresenterModule;
 import com.mwmurawski.nutritioninfo.presenter.presenter.MainActivityPresenter;
 import com.mwmurawski.nutritioninfo.view.interfaces.ItemAdapterInterface;
 import com.mwmurawski.nutritioninfo.view.interfaces.MainActivityView;
@@ -23,10 +21,9 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import io.reactivex.disposables.CompositeDisposable;
 
-public class MainActivity extends AppCompatActivity implements MainActivityView, ItemAdapterInterface {
+public class MainActivity extends BaseActivity<MainActivityPresenter> implements MainActivityView, ItemAdapterInterface {
 
     @BindView(R.id.floating_search_view)    FloatingSearchView   searchView;
     @BindView(R.id.main_recyclerview)       RecyclerView         recyclerView;
@@ -38,6 +35,16 @@ public class MainActivity extends AppCompatActivity implements MainActivityView,
 
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
 
+    @Override
+    protected int getLayoutFile() {
+        return 0;
+    }
+
+    @Override
+    protected void inject() {
+        DaggerMainActivityPresenterComponent.builder().build().inject(this);
+    }
+
     /*
     ________LIFE CYCLE METHODS________
      */
@@ -46,10 +53,10 @@ public class MainActivity extends AppCompatActivity implements MainActivityView,
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
 
-        DaggerMainActivityPresenterComponent.builder().mainActivityPresenterModule(new MainActivityPresenterModule(this)).build().inject(this);
+//        DaggerMainActivityPresenterComponent.builder().mainActivityPresenterModule(new MainActivityPresenterModule(this)).build().inject(this);
 
+        //bindView
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
 
@@ -157,6 +164,11 @@ public class MainActivity extends AppCompatActivity implements MainActivityView,
 
     @Override
     public void setData(List<SearchItem> listOfItems) {
+
+    }
+
+    @Override
+    public void initLayout() {
 
     }
 }
