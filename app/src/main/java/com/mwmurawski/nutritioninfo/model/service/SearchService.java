@@ -1,5 +1,6 @@
 package com.mwmurawski.nutritioninfo.model.service;
 
+import com.mwmurawski.nutritioninfo.model.report.FoodReport;
 import com.mwmurawski.nutritioninfo.model.search.SearchResult;
 
 import io.reactivex.Observable;
@@ -18,4 +19,7 @@ public interface SearchService {
 
     @GET("search/")
     Single<SearchResult> search(@Query("api_key") String apiKey, @Query("format") String format, @Query("q") String query);
+
+    @GET("reports/")
+    Single<FoodReport> foodReport(@Query("api_key") String apiKey, @Query("format") String format, @Query("type") String type, @Query("ndbno") String ndbno);
 }
