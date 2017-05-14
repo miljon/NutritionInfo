@@ -11,7 +11,8 @@ import android.widget.Toast;
 import com.arlib.floatingsearchview.FloatingSearchView;
 import com.mwmurawski.nutritioninfo.R;
 import com.mwmurawski.nutritioninfo.model.search.SearchItem;
-import com.mwmurawski.nutritioninfo.presenter.component.DaggerMainActivityPresenterComponent;
+import com.mwmurawski.nutritioninfo.presenter.component.DaggerMainActivityComponent;
+import com.mwmurawski.nutritioninfo.presenter.component.MainActivityComponent;
 import com.mwmurawski.nutritioninfo.presenter.presenter.MainActivityPresenter;
 import com.mwmurawski.nutritioninfo.view.interfaces.ItemAdapterInterface;
 import com.mwmurawski.nutritioninfo.view.interfaces.MainActivityView;
@@ -30,19 +31,26 @@ public class MainActivity extends BaseActivity<MainActivityPresenter> implements
     @BindView(R.id.progress_bar)            ProgressBar          progressBar;
     @BindView(R.id.swipe_refresh_layout)    SwipeRefreshLayout   swipeRefreshLayout;
 
-    @Inject MainActivityPresenter presenter;
+//    @Inject MainActivityPresenter presenter;
     @Inject ItemAdapterInterface itemAdapter;
 
-    private final CompositeDisposable compositeDisposable = new CompositeDisposable();
+    private final CompositeDisposable compositeDisposable = new CompositeDisposable(); //todo make an injection and move to presenter
 
     @Override
     protected int getLayoutFile() {
-        return 0;
+        return R.layout.activity_main;
     }
 
     @Override
     protected void inject() {
-        DaggerMainActivityPresenterComponent.builder().build().inject(this);
+        presenterProviderInterface = DaggerMainActivityComponent.builder().applicationComponent(getApplicationComponent()).build();
+        ((MainActivityComponent)presenterProviderInterface).inject(this);
+    }
+
+    @Override
+    public void asignPresenterValuesToViewAfterRestore() {
+        itemAdapter.setData(presenter.getItemList());
+        searchView.setSearchText(presenter.getQueryString());
     }
 
     /*
@@ -52,9 +60,8 @@ public class MainActivity extends BaseActivity<MainActivityPresenter> implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
-//        DaggerMainActivityPresenterComponent.builder().mainActivityPresenterModule(new MainActivityPresenterModule(this)).build().inject(this);
+        presenter.bindView(this);
 
         //bindView
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -75,13 +82,11 @@ public class MainActivity extends BaseActivity<MainActivityPresenter> implements
     @Override
     protected void onResume() {
         super.onResume();
-        if(!presenter.isAttachedToView()) presenter.attachView(this);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        presenter.detachView();
     }
 
     @Override

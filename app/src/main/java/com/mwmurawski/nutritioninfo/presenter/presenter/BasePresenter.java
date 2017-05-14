@@ -4,10 +4,9 @@ import com.mwmurawski.nutritioninfo.view.interfaces.BaseView;
 
 import java.lang.ref.WeakReference;
 
-public class BasePresenter<T extends BaseView> extends BaseBasePresenter {
+public abstract class BasePresenter<T extends BaseView> {
 
     private WeakReference<T> viewReference;
-
 
     /**
      * Binds the given view to this presenter.
@@ -18,12 +17,16 @@ public class BasePresenter<T extends BaseView> extends BaseBasePresenter {
         if (viewReference != null && viewReference.get() == view) {
             return;
         } else {
-            this.viewReference = new WeakReference<T>(view);
+            this.viewReference = new WeakReference<>(view);
         }
     }
 
     public void unbindView() {
         viewReference = null;
+    }
+
+    public boolean isViewBinded(){
+        return viewReference.get() != null;
     }
 
 
@@ -36,4 +39,5 @@ public class BasePresenter<T extends BaseView> extends BaseBasePresenter {
         }
         return viewReference.get();
     }
+
 }

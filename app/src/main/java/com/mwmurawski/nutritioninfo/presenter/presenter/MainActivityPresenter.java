@@ -5,8 +5,7 @@ import android.util.Log;
 import com.mwmurawski.nutritioninfo.model.repository.SearchRepository;
 import com.mwmurawski.nutritioninfo.model.search.SearchItem;
 import com.mwmurawski.nutritioninfo.model.search.SearchResult;
-import com.mwmurawski.nutritioninfo.presenter.component.DaggerNetworkComponent;
-import com.mwmurawski.nutritioninfo.presenter.component.DaggerRepositoryComponent;
+import com.mwmurawski.nutritioninfo.presenter.component.DaggerMainActivityPresenterComponent;
 import com.mwmurawski.nutritioninfo.view.interfaces.MainActivityView;
 
 import java.util.List;
@@ -26,38 +25,27 @@ public class MainActivityPresenter extends BasePresenter<MainActivityView>{
 
     @Inject Retrofit retrofit;
     @Inject SearchRepository searchRepository;
+
+    //Activity values to operate and restore
     private String queryString = null;
-
-
-    private MainActivityView mainActivityView;
-
     private List<SearchItem> itemList;
 
 
+    public String getQueryString() {
+        return queryString;
+    }
+
+    public List<SearchItem> getItemList() {
+        return itemList;
+    }
+
     public MainActivityPresenter() {
-        DaggerNetworkComponent.create().inject(this);
-        DaggerRepositoryComponent.create().inject(this);
+        DaggerMainActivityPresenterComponent.builder().build().inject(this);
     }
-
-
-    public void attachView(MainActivityView mainActivityView) {
-        this.mainActivityView = mainActivityView;
-    }
-
-
-    public boolean isAttachedToView() {
-        return mainActivityView != null;
-    }
-
-
-    public void detachView() {
-        mainActivityView = null;
-    }
-
 
     public void loadResponse() {
         if (queryString != null && !queryString.isEmpty()) {
-            mainActivityView.showProgressBar();
+            getView().showProgressBar();
             compositeDisposable.add(searchRepository.getSearchResult(queryString)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -89,17 +77,18 @@ public class MainActivityPresenter extends BasePresenter<MainActivityView>{
                 && searchResult.getSearchList() != null
                 && searchResult.getSearchList().getSearchItems() != null
                 && !searchResult.getSearchList().getSearchItems().isEmpty()) {
-            mainActivityView.putListToAdapter(searchResult.getSearchList().getSearchItems());
+            itemList = searchResult.getSearchList().getSearchItems();
+            getView().putListToAdapter(itemList);
         } else {
             handleError(new Throwable("Empty response"), "empty response");
         }
-        mainActivityView.hideProgressBar();
-        mainActivityView.setSwipeRefreshingToFalse();
+        getView().hideProgressBar();
+        getView().setSwipeRefreshingToFalse();
     }
 
 
     public void makeToast(String toastText) {
-        mainActivityView.makeToast(toastText);
+        getView().makeToast(toastText);
     }
 
 
