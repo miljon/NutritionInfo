@@ -14,9 +14,7 @@ public abstract class BasePresenter<T extends BaseView> {
      * @param view View to bind.
      */
     public void bindView(T view) {
-        if (viewReference != null && viewReference.get() == view) {
-            return;
-        } else {
+        if (viewReference == null || viewReference.get() != view) {
             this.viewReference = new WeakReference<>(view);
         }
     }
@@ -25,6 +23,10 @@ public abstract class BasePresenter<T extends BaseView> {
         viewReference = null;
     }
 
+    /**
+     * Method checks if view is binded
+      * @return true if view is binded, false if it's not
+     */
     public boolean isViewBinded(){
         return viewReference.get() != null;
     }

@@ -6,7 +6,6 @@ package com.mwmurawski.nutritioninfo.presenter.presenter;
  */
 public abstract class BaseBasePresenter {
 
-
     public BaseBasePresenter() {
     }
 }

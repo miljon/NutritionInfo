@@ -31,7 +31,6 @@ public class MainActivity extends BaseActivity<MainActivityPresenter> implements
     @BindView(R.id.progress_bar)            ProgressBar          progressBar;
     @BindView(R.id.swipe_refresh_layout)    SwipeRefreshLayout   swipeRefreshLayout;
 
-//    @Inject MainActivityPresenter presenter;
     @Inject ItemAdapterInterface itemAdapter;
 
     private final CompositeDisposable compositeDisposable = new CompositeDisposable(); //todo make an injection and move to presenter

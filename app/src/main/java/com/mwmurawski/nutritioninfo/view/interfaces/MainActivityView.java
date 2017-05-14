@@ -19,12 +19,4 @@ public interface MainActivityView extends BaseView{
     void hideProgressBar();
 
     void setSwipeRefreshingToFalse();
-
-//    void loadListOfItems(List<SearchItem> itemList);
-//
-//    void showProgressBar();
-//
-//    void loadingComplete();
-//
-//    void loadingError();
 }

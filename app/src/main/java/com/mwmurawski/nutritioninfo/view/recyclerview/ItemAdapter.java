@@ -36,12 +36,9 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
     private List<SearchItem> listOfItems;
     private MainActivityPresenter presenter;
 
-//    @Inject ItemAdapterPresenter itemAdapterPresenter;
-
     public ItemAdapter(List<SearchItem> listOfItems, MainActivityPresenter presenter) {
         this.listOfItems = listOfItems;
         this.presenter = presenter;
-//        DaggerItemAdapterPresenterComponent.builder().itemAdapterPresenterModule(new ItemAdapterPresenterModule(this)).build().inject(this);
     }
 
     @Override

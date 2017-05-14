@@ -10,6 +10,6 @@ import dagger.Component;
 @Singleton
 @Component(modules = {ApplicationModule.class})
 public interface ApplicationComponent {
-//    void inject(App app);
+
     PresenterCache getPresenterCache();
 }

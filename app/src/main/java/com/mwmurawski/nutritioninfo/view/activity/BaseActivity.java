@@ -22,7 +22,6 @@ public abstract class BaseActivity<T extends BasePresenter> extends CoreActivity
         return ((App) getApplication()).getApplicationComponent();
     }
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +46,6 @@ public abstract class BaseActivity<T extends BasePresenter> extends CoreActivity
             return true;
         }
     }
-
 
     @LayoutRes
     protected abstract int getLayoutFile();
