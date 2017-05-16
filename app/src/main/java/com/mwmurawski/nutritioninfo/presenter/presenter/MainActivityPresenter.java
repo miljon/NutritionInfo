@@ -1,7 +1,5 @@
 package com.mwmurawski.nutritioninfo.presenter.presenter;
 
-import android.util.Log;
-
 import com.mwmurawski.nutritioninfo.model.repository.SearchRepository;
 import com.mwmurawski.nutritioninfo.model.search.SearchItem;
 import com.mwmurawski.nutritioninfo.model.search.SearchResult;
@@ -68,7 +66,6 @@ public class MainActivityPresenter extends BasePresenter<MainActivityView>{
 
     private void handleError(Throwable throwable, String additionalInfo) {
         makeToast("Error: "+additionalInfo);
-        Log.e("MMU", "Error, e: " + throwable.getLocalizedMessage());
     }
 
 
@@ -110,7 +107,8 @@ public class MainActivityPresenter extends BasePresenter<MainActivityView>{
         StringBuilder sb = new StringBuilder();
         String[] nameLines = name.split(",");
         for (int i = 0; i < nameLines.length-1; i++){
-            if(!nameLines[i].contains("UPC:")) sb.append(nameLines[i].trim()).append("\n");
+            if(!nameLines[i].contains("UPC:")) sb.append(nameLines[i].trim());
+            if (i != nameLines.length-2) sb.append("\n");
         }
         return sb.toString();
     }
