@@ -68,9 +68,9 @@ public class MainActivityPresenterTest {
     public static Collection<Object[]> data() {
         Collection<Object[]> c = new ArrayList<>();
         c.add(new Object[]{"PLUM, MASHUPS, ORGANIC APPLE SAUCE + STRAWBERRIES & BANANAS, STRAWBERRY BANANA!, UPC: 846675002198",
-                "PLUM\nMASHUPS\nORGANIC APPLE SAUCE + STRAWBERRIES & BANANAS\nSTRAWBERRY BANANA!"});
+                "Plum\nMashups\nOrganic apple sauce + strawberries & bananas\nStrawberry banana!"});
         c.add(new Object[]{"AHOLD, HARICOTS VERTS LIGHTLY SEASONED FRENCH GREEN BEANS WITH FINISHING BUTTER, UPC: 688267136344",
-                "AHOLD\nHARICOTS VERTS LIGHTLY SEASONED FRENCH GREEN BEANS WITH FINISHING BUTTER"});
+                "Ahold\nHaricots verts lightly seasoned french green beans with finishing butter"});
         return c;
     }
 }

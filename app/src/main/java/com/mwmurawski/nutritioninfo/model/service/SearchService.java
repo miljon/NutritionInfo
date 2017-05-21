@@ -8,10 +8,6 @@ import io.reactivex.Single;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
-/**
- * Created by Mij on 2017-04-17.
- */
-
 public interface SearchService {
 
     @GET("/search/")

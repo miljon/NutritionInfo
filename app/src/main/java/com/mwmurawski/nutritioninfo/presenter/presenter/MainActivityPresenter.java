@@ -12,39 +12,38 @@ import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
-import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
-import retrofit2.Retrofit;
 
-public class MainActivityPresenter extends BasePresenter<MainActivityView>{
+public class MainActivityPresenter extends BasePresenter<MainActivityView> {
 
-    private final CompositeDisposable compositeDisposable = new CompositeDisposable();
-
-    @Inject Retrofit retrofit;
     @Inject SearchRepository searchRepository;
 
     //Activity values to operate and restore
     private String queryString = null;
     private List<SearchItem> itemList;
 
+    public MainActivityPresenter() {
+        DaggerMainActivityPresenterComponent.builder().build().inject(this);
+
+    }
 
     public String getQueryString() {
         return queryString;
+    }
+
+    public void setQueryString(String queryString) {
+        this.queryString = queryString;
     }
 
     public List<SearchItem> getItemList() {
         return itemList;
     }
 
-    public MainActivityPresenter() {
-        DaggerMainActivityPresenterComponent.builder().build().inject(this);
-    }
-
     public void loadResponse() {
         if (queryString != null && !queryString.isEmpty()) {
             getView().showProgressBar();
-            compositeDisposable.add(searchRepository.getSearchResult(queryString)
+            getCompositeDisposable().add(searchRepository.getSearchResult(queryString)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeWith(new DisposableSingleObserver<SearchResult>() {
@@ -63,11 +62,9 @@ public class MainActivityPresenter extends BasePresenter<MainActivityView>{
         }
     }
 
-
     private void handleError(Throwable throwable, String additionalInfo) {
-        makeToast("Error: "+additionalInfo);
+        makeToast("Error (" + additionalInfo + "): " + throwable.getLocalizedMessage());
     }
-
 
     private void handleResponse(SearchResult searchResult) {
         if (searchResult != null
@@ -83,14 +80,8 @@ public class MainActivityPresenter extends BasePresenter<MainActivityView>{
         getView().setSwipeRefreshingToFalse();
     }
 
-
     public void makeToast(String toastText) {
         getView().makeToast(toastText);
-    }
-
-
-    public void setQueryString(String queryString) {
-        this.queryString = queryString;
     }
 
     public void refreshList() {
@@ -103,12 +94,15 @@ public class MainActivityPresenter extends BasePresenter<MainActivityView>{
      * @param name read from json
      * @return formatted string with new line for every coma, if line contains "UPC:" then it is
      */
-    public String formatNameToAdapter(String name){
+    public String formatNameToAdapter(String name) {
         StringBuilder sb = new StringBuilder();
         String[] nameLines = name.split(",");
-        for (int i = 0; i < nameLines.length-1; i++){
-            if(!nameLines[i].contains("UPC:")) sb.append(nameLines[i].trim());
-            if (i != nameLines.length-2) sb.append("\n");
+        for (int i = 0; i < nameLines.length - 1; i++) {
+            if (!(sb.length() == 0)) sb.append("\n");
+            if (!nameLines[i].contains("UPC:")) {
+                sb.append(nameLines[i].trim().substring(0, 1).toUpperCase())
+                        .append(nameLines[i].trim().substring(1).toLowerCase());
+            }
         }
         return sb.toString();
     }

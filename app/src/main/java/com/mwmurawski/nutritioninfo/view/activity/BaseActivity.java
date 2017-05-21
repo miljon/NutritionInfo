@@ -28,8 +28,6 @@ public abstract class BaseActivity<T extends BasePresenter> extends CoreActivity
         setContentView(getLayoutFile());
         inject();
         ButterKnife.bind(this);
-        if (restoreOrCreatePresenter())
-            asignPresenterValuesToViewAfterRestore();
     }
 
     @SuppressWarnings("unchecked")
@@ -56,6 +54,14 @@ public abstract class BaseActivity<T extends BasePresenter> extends CoreActivity
     protected abstract void inject();
 
     public abstract void asignPresenterValuesToViewAfterRestore();
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        if (restoreOrCreatePresenter())
+            asignPresenterValuesToViewAfterRestore();
+    }
 
     @Override
     protected void onStop() {

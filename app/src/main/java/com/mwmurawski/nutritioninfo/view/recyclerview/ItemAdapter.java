@@ -16,6 +16,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.subjects.PublishSubject;
 
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder> implements ItemAdapterInterface{
 
@@ -36,18 +37,21 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
     private List<SearchItem> listOfItems;
     private MainActivityPresenter presenter;
 
+    private final PublishSubject<String> publishSubject;
+
     public ItemAdapter(List<SearchItem> listOfItems, MainActivityPresenter presenter) {
         this.listOfItems = listOfItems;
         this.presenter = presenter;
+        publishSubject = PublishSubject.create();
     }
 
     @Override
-    public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ItemViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
         final View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_view, parent, false);
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                presenter.makeToast("Item was clicked. ID: "+view.getId());
+                presenter.makeToast("Item was clicked. ID: "+ itemView.getId()+", "+parent.getId());
             }
         });
         return new ItemViewHolder(itemView);
@@ -68,5 +72,10 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
 
     public void setData(List<SearchItem> listOfItems){
         this.listOfItems = listOfItems;
+    }
+
+    @Override
+    public void setPresenter(MainActivityPresenter presenter) {
+        this.presenter = presenter;
     }
 }

@@ -12,8 +12,8 @@ import retrofit2.Retrofit;
 
 
 public class SearchRepository {
-    Retrofit retrofit;
-    SearchService searchService;
+    private Retrofit retrofit;
+    private SearchService searchService;
 
     @Inject
     public SearchRepository(Retrofit retrofit) {

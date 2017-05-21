@@ -4,7 +4,7 @@ import com.mwmurawski.nutritioninfo.view.interfaces.BaseView;
 
 import java.lang.ref.WeakReference;
 
-public abstract class BasePresenter<T extends BaseView> {
+public abstract class BasePresenter<T extends BaseView> extends CorePresenter{
 
     private WeakReference<T> viewReference;
 

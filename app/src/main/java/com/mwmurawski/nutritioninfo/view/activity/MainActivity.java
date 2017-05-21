@@ -22,9 +22,8 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.BindView;
-import io.reactivex.disposables.CompositeDisposable;
 
-public class MainActivity extends BaseActivity<MainActivityPresenter> implements MainActivityView, ItemAdapterInterface {
+public class MainActivity extends BaseActivity<MainActivityPresenter> implements MainActivityView {
 
     @BindView(R.id.floating_search_view)    FloatingSearchView   searchView;
     @BindView(R.id.main_recyclerview)       RecyclerView         recyclerView;
@@ -32,8 +31,6 @@ public class MainActivity extends BaseActivity<MainActivityPresenter> implements
     @BindView(R.id.swipe_refresh_layout)    SwipeRefreshLayout   swipeRefreshLayout;
 
     @Inject ItemAdapterInterface itemAdapter;
-
-    private final CompositeDisposable compositeDisposable = new CompositeDisposable(); //todo make an injection and move to presenter
 
     @Override
     protected int getLayoutFile() {
@@ -48,6 +45,7 @@ public class MainActivity extends BaseActivity<MainActivityPresenter> implements
 
     @Override
     public void asignPresenterValuesToViewAfterRestore() {
+        itemAdapter.setPresenter(presenter);
         itemAdapter.setData(presenter.getItemList());
         searchView.setSearchText(presenter.getQueryString());
     }
@@ -60,7 +58,6 @@ public class MainActivity extends BaseActivity<MainActivityPresenter> implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        presenter.bindView(this);
 
         //bindView
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -76,6 +73,7 @@ public class MainActivity extends BaseActivity<MainActivityPresenter> implements
     protected void onStart() {
         super.onStart();
 
+        presenter.bindView(this);
     }
 
     @Override
@@ -99,7 +97,6 @@ public class MainActivity extends BaseActivity<MainActivityPresenter> implements
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        compositeDisposable.clear();
     }
 
     /*
@@ -163,11 +160,6 @@ public class MainActivity extends BaseActivity<MainActivityPresenter> implements
     @Override
     public void hideProgressBar() {
         progressBar.setVisibility(View.GONE);
-
-    }
-
-    @Override
-    public void setData(List<SearchItem> listOfItems) {
 
     }
 
