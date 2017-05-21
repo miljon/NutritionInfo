@@ -19,7 +19,7 @@ public class Measure {
     private Double qty;
     @SerializedName("value")
     @Expose
-    private Double value;
+    private String value;
 
     public String getLabel() {
         return label;
@@ -53,11 +53,11 @@ public class Measure {
         this.qty = qty;
     }
 
-    public Double getValue() {
+    public String getValue() {
         return value;
     }
 
-    public void setValue(Double value) {
+    public void setValue(String value) {
         this.value = value;
     }
 

@@ -5,11 +5,12 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+
 public class Nutrient {
 
     @SerializedName("nutrient_id")
     @Expose
-    private Integer nutrientId;
+    private String nutrientId;
     @SerializedName("name")
     @Expose
     private String name;
@@ -21,25 +22,16 @@ public class Nutrient {
     private String unit;
     @SerializedName("value")
     @Expose
-    private Double value;
-    @SerializedName("sourcecode")
-    @Expose
-    private String sourcecode;
-    @SerializedName("dp")
-    @Expose
-    private String dp;
-    @SerializedName("se")
-    @Expose
-    private String se;
+    private String value;
     @SerializedName("measures")
     @Expose
     private List<Measure> measures = null;
 
-    public Integer getNutrientId() {
+    public String getNutrientId() {
         return nutrientId;
     }
 
-    public void setNutrientId(Integer nutrientId) {
+    public void setNutrientId(String nutrientId) {
         this.nutrientId = nutrientId;
     }
 
@@ -67,36 +59,12 @@ public class Nutrient {
         this.unit = unit;
     }
 
-    public Double getValue() {
+    public String getValue() {
         return value;
     }
 
-    public void setValue(Double value) {
+    public void setValue(String value) {
         this.value = value;
-    }
-
-    public String getSourcecode() {
-        return sourcecode;
-    }
-
-    public void setSourcecode(String sourcecode) {
-        this.sourcecode = sourcecode;
-    }
-
-    public String getDp() {
-        return dp;
-    }
-
-    public void setDp(String dp) {
-        this.dp = dp;
-    }
-
-    public String getSe() {
-        return se;
-    }
-
-    public void setSe(String se) {
-        this.se = se;
     }
 
     public List<Measure> getMeasures() {
