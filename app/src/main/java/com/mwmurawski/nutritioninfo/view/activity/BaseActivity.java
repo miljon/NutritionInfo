@@ -3,6 +3,7 @@ package com.mwmurawski.nutritioninfo.view.activity;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
+import android.widget.Toast;
 
 import com.mwmurawski.nutritioninfo.App;
 import com.mwmurawski.nutritioninfo.presenter.component.ApplicationComponent;
@@ -53,14 +54,14 @@ public abstract class BaseActivity<T extends BasePresenter> extends CoreActivity
      */
     protected abstract void inject();
 
-    public abstract void asignPresenterValuesToViewAfterRestore();
+    public abstract void assignPresenterValuesToViewAfterRestore();
 
     @Override
     protected void onStart() {
         super.onStart();
 
         if (restoreOrCreatePresenter())
-            asignPresenterValuesToViewAfterRestore();
+            assignPresenterValuesToViewAfterRestore();
     }
 
     @Override
@@ -75,5 +76,9 @@ public abstract class BaseActivity<T extends BasePresenter> extends CoreActivity
             presenterCache.putPresenter(getClass().getName(), presenter);
         }
         presenter.unbindView();
+    }
+
+    public void makeToast(String toastText) {
+        Toast.makeText(getApplicationContext(), toastText, Toast.LENGTH_SHORT).show();
     }
 }

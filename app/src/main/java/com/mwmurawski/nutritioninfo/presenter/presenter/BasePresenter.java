@@ -21,6 +21,7 @@ public abstract class BasePresenter<T extends BaseView> extends CorePresenter{
 
     public void unbindView() {
         viewReference = null;
+        getCompositeDisposable().dispose();
     }
 
     /**

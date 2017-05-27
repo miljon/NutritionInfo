@@ -5,7 +5,11 @@ import com.mwmurawski.nutritioninfo.presenter.presenter.MainActivityPresenter;
 
 import java.util.List;
 
-public interface ItemAdapterInterface {
+import io.reactivex.Observable;
+
+public interface ItemAdapterView {
     void setData(List<SearchItem> listOfItems);
     void setPresenter(MainActivityPresenter presenter);
+    Observable<String> getNdbnoClickObservable();
+
 }

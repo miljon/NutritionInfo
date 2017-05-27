@@ -10,13 +10,11 @@ import java.util.List;
 
 public interface MainActivityView extends BaseView{
 
-    void makeToast(String toastText);
-
     void putListToAdapter(List<SearchItem> searchItems);
 
     void showProgressBar();
 
     void hideProgressBar();
 
-    void setSwipeRefreshingToFalse();
+    void startDetailsActivity(String ndbno);
 }

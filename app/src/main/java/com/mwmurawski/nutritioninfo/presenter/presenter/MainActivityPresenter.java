@@ -10,8 +10,11 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Action;
+import io.reactivex.observers.DisposableObserver;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
@@ -25,7 +28,6 @@ public class MainActivityPresenter extends BasePresenter<MainActivityView> {
 
     public MainActivityPresenter() {
         DaggerMainActivityPresenterComponent.builder().build().inject(this);
-
     }
 
     public String getQueryString() {
@@ -40,16 +42,22 @@ public class MainActivityPresenter extends BasePresenter<MainActivityView> {
         return itemList;
     }
 
-    public void loadResponse() {
+    public void loadSearchResponse() {
         if (queryString != null && !queryString.isEmpty()) {
             getView().showProgressBar();
             getCompositeDisposable().add(searchRepository.getSearchResult(queryString)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
+                    .doFinally(new Action() {
+                        @Override
+                        public void run() throws Exception {
+                            getView().hideProgressBar();
+                        }
+                    })
                     .subscribeWith(new DisposableSingleObserver<SearchResult>() {
                         @Override
                         public void onSuccess(@NonNull SearchResult searchResult) {
-                            handleResponse(searchResult);
+                            handleSearchResponse(searchResult);
                         }
 
                         @Override
@@ -62,11 +70,38 @@ public class MainActivityPresenter extends BasePresenter<MainActivityView> {
         }
     }
 
+    public void startObserveFoodItemsClick(Observable<String> observable){
+
+        compositeDisposable.add(observable
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableObserver<String>() {
+                    @Override
+                    public void onNext(@NonNull String ndbno) {
+                        startNutritionActivity(ndbno);
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        handleError(e, "Food details problem");
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                }));
+    }
+
+    private void startNutritionActivity(String ndbno){
+        getView().startDetailsActivity(ndbno);
+    }
+
     private void handleError(Throwable throwable, String additionalInfo) {
         makeToast("Error (" + additionalInfo + "): " + throwable.getLocalizedMessage());
     }
 
-    private void handleResponse(SearchResult searchResult) {
+    private void handleSearchResponse(SearchResult searchResult) {
         if (searchResult != null
                 && searchResult.getSearchList() != null
                 && searchResult.getSearchList().getSearchItems() != null
@@ -76,25 +111,20 @@ public class MainActivityPresenter extends BasePresenter<MainActivityView> {
         } else {
             handleError(new Throwable("Empty response"), "empty response");
         }
-        getView().hideProgressBar();
-        getView().setSwipeRefreshingToFalse();
     }
 
     public void makeToast(String toastText) {
         getView().makeToast(toastText);
     }
 
-    public void refreshList() {
-        loadResponse();
-    }
-
     /**
      * Random json output:
      * "name": "PLUM, MASHUPS, ORGANIC APPLE SAUCE + STRAWBERRIES & BANANAS, STRAWBERRY BANANA!, UPC: 846675002198"
-     * @param name read from json
+     * @param searchItem item from list of items provided by network request
      * @return formatted string with new line for every coma, if line contains "UPC:" then it is
      */
-    public String formatNameToAdapter(String name) {
+    public String formatNameToAdapter(SearchItem searchItem) {
+        final String name = searchItem.getName();
         StringBuilder sb = new StringBuilder();
         String[] nameLines = name.split(",");
         for (int i = 0; i < nameLines.length - 1; i++) {

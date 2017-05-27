@@ -1,12 +1,11 @@
 package com.mwmurawski.nutritioninfo.view.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.arlib.floatingsearchview.FloatingSearchView;
 import com.mwmurawski.nutritioninfo.R;
@@ -14,7 +13,7 @@ import com.mwmurawski.nutritioninfo.model.search.SearchItem;
 import com.mwmurawski.nutritioninfo.presenter.component.DaggerMainActivityComponent;
 import com.mwmurawski.nutritioninfo.presenter.component.MainActivityComponent;
 import com.mwmurawski.nutritioninfo.presenter.presenter.MainActivityPresenter;
-import com.mwmurawski.nutritioninfo.view.interfaces.ItemAdapterInterface;
+import com.mwmurawski.nutritioninfo.view.interfaces.ItemAdapterView;
 import com.mwmurawski.nutritioninfo.view.interfaces.MainActivityView;
 
 import java.util.List;
@@ -30,7 +29,7 @@ public class MainActivity extends BaseActivity<MainActivityPresenter> implements
     @BindView(R.id.progress_bar)            ProgressBar          progressBar;
     @BindView(R.id.swipe_refresh_layout)    SwipeRefreshLayout   swipeRefreshLayout;
 
-    @Inject ItemAdapterInterface itemAdapter;
+    @Inject ItemAdapterView itemAdapter;
 
     @Override
     protected int getLayoutFile() {
@@ -44,10 +43,11 @@ public class MainActivity extends BaseActivity<MainActivityPresenter> implements
     }
 
     @Override
-    public void asignPresenterValuesToViewAfterRestore() {
+    public void assignPresenterValuesToViewAfterRestore() {
         itemAdapter.setPresenter(presenter);
         itemAdapter.setData(presenter.getItemList());
         searchView.setSearchText(presenter.getQueryString());
+
     }
 
     /*
@@ -74,6 +74,7 @@ public class MainActivity extends BaseActivity<MainActivityPresenter> implements
         super.onStart();
 
         presenter.bindView(this);
+        presenter.startObserveFoodItemsClick(itemAdapter.getNdbnoClickObservable());
     }
 
     @Override
@@ -110,7 +111,7 @@ public class MainActivity extends BaseActivity<MainActivityPresenter> implements
 
             @Override
             public void onFocusCleared() {
-                presenter.loadResponse();
+                presenter.loadSearchResponse();
             }
         });
 
@@ -127,7 +128,7 @@ public class MainActivity extends BaseActivity<MainActivityPresenter> implements
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                presenter.refreshList();
+                presenter.loadSearchResponse();
             }
         });
     }
@@ -137,13 +138,10 @@ public class MainActivity extends BaseActivity<MainActivityPresenter> implements
      */
 
     @Override
-    public void setSwipeRefreshingToFalse(){
-        swipeRefreshLayout.setRefreshing(false);
-    }
-
-    @Override
-    public void makeToast(String toastText) {
-        Toast.makeText(getApplicationContext(), toastText, Toast.LENGTH_SHORT).show();
+    public void startDetailsActivity(final String ndbno) {
+        Intent intent = new Intent(this, FoodDetailsActivity.class);
+        intent.putExtra("ndbno", ndbno);
+        startActivity(intent);
     }
 
     @Override
@@ -154,17 +152,11 @@ public class MainActivity extends BaseActivity<MainActivityPresenter> implements
 
     @Override
     public void showProgressBar() {
-        progressBar.setVisibility(View.VISIBLE);
+        swipeRefreshLayout.setRefreshing(true);
     }
 
     @Override
     public void hideProgressBar() {
-        progressBar.setVisibility(View.GONE);
-
-    }
-
-    @Override
-    public void initLayout() {
-
+        swipeRefreshLayout.setRefreshing(false);
     }
 }

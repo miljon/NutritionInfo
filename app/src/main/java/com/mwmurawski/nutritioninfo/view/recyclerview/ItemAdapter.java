@@ -9,16 +9,21 @@ import android.widget.TextView;
 
 import com.mwmurawski.nutritioninfo.R;
 import com.mwmurawski.nutritioninfo.model.search.SearchItem;
+import com.mwmurawski.nutritioninfo.presenter.component.DaggerAdapterComponent;
 import com.mwmurawski.nutritioninfo.presenter.presenter.MainActivityPresenter;
-import com.mwmurawski.nutritioninfo.view.interfaces.ItemAdapterInterface;
+import com.mwmurawski.nutritioninfo.view.interfaces.ItemAdapterView;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.Observable;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.subjects.PublishSubject;
 
-public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder> implements ItemAdapterInterface{
+public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder> implements ItemAdapterView {
 
     /**
      * ViewHolder for Item
@@ -27,7 +32,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
 
         @Nullable @BindView(R.id.maintext_line1) TextView mainText1;
 
-        public ItemViewHolder(View itemView) {
+        ItemViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
@@ -37,31 +42,36 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
     private List<SearchItem> listOfItems;
     private MainActivityPresenter presenter;
 
+    @Inject CompositeDisposable compositeDisposable;
+
     private final PublishSubject<String> publishSubject;
 
     public ItemAdapter(List<SearchItem> listOfItems, MainActivityPresenter presenter) {
         this.listOfItems = listOfItems;
         this.presenter = presenter;
+
+        DaggerAdapterComponent.builder().build().inject(this);
+
         publishSubject = PublishSubject.create();
     }
 
     @Override
     public ItemViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
         final View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_view, parent, false);
-        itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                presenter.makeToast("Item was clicked. ID: "+ itemView.getId()+", "+parent.getId());
-            }
-        });
         return new ItemViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(ItemViewHolder holder, int position) {
+    public void onBindViewHolder(final ItemViewHolder holder, int position) {
         if (holder.mainText1 != null) {
-            SearchItem item = listOfItems.get(position);
-            holder.mainText1.setText(presenter.formatNameToAdapter(item.getName()));
+            final SearchItem item = listOfItems.get(position);
+            holder.mainText1.setText(presenter.formatNameToAdapter(item));
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    publishSubject.onNext(item.getNdbno());
+                }
+            });
         }
     }
 
@@ -69,6 +79,12 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
     public int getItemCount() {
         return listOfItems.size();
     }
+
+    @Override
+    public Observable<String> getNdbnoClickObservable(){
+        return publishSubject;
+    }
+
 
     public void setData(List<SearchItem> listOfItems){
         this.listOfItems = listOfItems;

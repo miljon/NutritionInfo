@@ -1,5 +1,5 @@
 package com.mwmurawski.nutritioninfo.view.interfaces;
 
 public interface BaseView {
-    void initLayout();
+    void makeToast(String toastText);
 }
