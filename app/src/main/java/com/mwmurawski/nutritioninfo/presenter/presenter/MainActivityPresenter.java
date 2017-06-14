@@ -1,5 +1,6 @@
 package com.mwmurawski.nutritioninfo.presenter.presenter;
 
+import com.mwmurawski.nutritioninfo.cons.Strings;
 import com.mwmurawski.nutritioninfo.model.repository.SearchRepository;
 import com.mwmurawski.nutritioninfo.model.search.SearchItem;
 import com.mwmurawski.nutritioninfo.model.search.SearchResult;
@@ -28,6 +29,11 @@ public class MainActivityPresenter extends BasePresenter<MainActivityView> {
 
     public MainActivityPresenter() {
         DaggerMainActivityPresenterComponent.builder().build().inject(this);
+    }
+
+    //for unit test
+    public MainActivityPresenter(SearchRepository searchRepository) {
+        this.searchRepository = searchRepository;
     }
 
     public String getQueryString() {
@@ -62,11 +68,11 @@ public class MainActivityPresenter extends BasePresenter<MainActivityView> {
 
                         @Override
                         public void onError(@NonNull Throwable e) {
-                            handleError(e, "network problem");
+                            handleError(e, Strings.NETWORK_PROBLEM);
                         }
                     }));
         } else {
-            makeToast("Error: empty text");
+            makeToast(Strings.EMPTY_STRING);
         }
     }
 
@@ -83,7 +89,7 @@ public class MainActivityPresenter extends BasePresenter<MainActivityView> {
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        handleError(e, "Food details problem");
+                        handleError(e, Strings.FOOD_DETAILS_PROBLEM);
                     }
 
                     @Override
@@ -109,7 +115,7 @@ public class MainActivityPresenter extends BasePresenter<MainActivityView> {
             itemList = searchResult.getSearchList().getSearchItems();
             getView().putListToAdapter(itemList);
         } else {
-            handleError(new Throwable("Empty response"), "empty response");
+            handleError(new Throwable(Strings.EMPTY_RESPONSE), Strings.EMPTY_RESPONSE);
         }
     }
 

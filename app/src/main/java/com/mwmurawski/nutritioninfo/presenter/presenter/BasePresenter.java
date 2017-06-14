@@ -36,7 +36,7 @@ public abstract class BasePresenter<T extends BaseView> extends CorePresenter{
     /**
      * @return The view attached to this presenter, or {@code null} if it was unbound.
      */
-    protected T getView() {
+    public T getView() {
         if (viewReference == null) {
             return null;
         }
