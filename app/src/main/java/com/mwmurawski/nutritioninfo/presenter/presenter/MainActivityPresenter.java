@@ -1,6 +1,7 @@
 package com.mwmurawski.nutritioninfo.presenter.presenter;
 
 import com.mwmurawski.nutritioninfo.cons.Strings;
+import com.mwmurawski.nutritioninfo.cons.schedulers.MySchedulers;
 import com.mwmurawski.nutritioninfo.model.repository.SearchRepository;
 import com.mwmurawski.nutritioninfo.model.search.SearchItem;
 import com.mwmurawski.nutritioninfo.model.search.SearchResult;
@@ -14,14 +15,14 @@ import javax.inject.Inject;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
-import io.reactivex.functions.Action;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
 public class MainActivityPresenter extends BasePresenter<MainActivityView> {
 
-    @Inject SearchRepository searchRepository;
+    private SearchRepository searchRepository;
+    private MySchedulers mySchedulers;
 
     //Activity values to operate and restore
     private String queryString = null;
@@ -31,9 +32,11 @@ public class MainActivityPresenter extends BasePresenter<MainActivityView> {
         DaggerMainActivityPresenterComponent.builder().build().inject(this);
     }
 
-    //for unit test
-    public MainActivityPresenter(SearchRepository searchRepository) {
+    //I used constructor injections mostly for unit test, in test there will be different implementation of injected fields
+    @Inject
+    public MainActivityPresenter(SearchRepository searchRepository, MySchedulers mySchedulers) {
         this.searchRepository = searchRepository;
+        this.mySchedulers = mySchedulers;
     }
 
     public String getQueryString() {
@@ -52,23 +55,19 @@ public class MainActivityPresenter extends BasePresenter<MainActivityView> {
         if (queryString != null && !queryString.isEmpty()) {
             getView().showProgressBar();
             getCompositeDisposable().add(searchRepository.getSearchResult(queryString)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .doFinally(new Action() {
-                        @Override
-                        public void run() throws Exception {
-                            getView().hideProgressBar();
-                        }
-                    })
+                    .subscribeOn(mySchedulers.io())
+                    .observeOn(mySchedulers.ui())
                     .subscribeWith(new DisposableSingleObserver<SearchResult>() {
                         @Override
                         public void onSuccess(@NonNull SearchResult searchResult) {
                             handleSearchResponse(searchResult);
+                            getView().hideProgressBar();
                         }
 
                         @Override
                         public void onError(@NonNull Throwable e) {
                             handleError(e, Strings.NETWORK_PROBLEM);
+                            getView().hideProgressBar();
                         }
                     }));
         } else {

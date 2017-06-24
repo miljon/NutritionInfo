@@ -12,4 +12,8 @@ public abstract class CorePresenter {
     CompositeDisposable getCompositeDisposable(){
         return compositeDisposable;
     }
+
+    public void setCompositeDisposable(CompositeDisposable compositeDisposable) {
+        this.compositeDisposable = compositeDisposable;
+    }
 }
