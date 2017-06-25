@@ -12,7 +12,6 @@ import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
-import io.reactivex.functions.Action;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
@@ -39,15 +38,10 @@ public class FoodDetailsPresenter extends BasePresenter<FoodDetailsView> {
         getCompositeDisposable().add(searchRepository.getFoodReport(ndbno)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doFinally(new Action() {
-                    @Override
-                    public void run() throws Exception {
-                        getView().hideProgressBar();
-                    }
-                })
                 .subscribeWith(new DisposableSingleObserver<FoodReport>() {
                     @Override
                     public void onSuccess(@NonNull FoodReport foodReport) {
+                        getView().hideProgressBar();
                         String formattedName = formatFoodName(foodReport.getReport().getFood().getName());
                         nutrientList = foodReport.getReport().getFood().getNutrients();
                         getView().showNutritionDetails(formattedName, nutrientList);
@@ -55,6 +49,7 @@ public class FoodDetailsPresenter extends BasePresenter<FoodDetailsView> {
 
                     @Override
                     public void onError(@NonNull Throwable e) {
+                        getView().hideProgressBar();
                         getView().makeToast("Error while loading details, try again");
                         getView().comebackToMainActivity();
                     }

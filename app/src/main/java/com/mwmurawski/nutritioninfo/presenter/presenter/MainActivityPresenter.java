@@ -39,18 +39,6 @@ public class MainActivityPresenter extends BasePresenter<MainActivityView> {
         this.mySchedulers = mySchedulers;
     }
 
-    public String getQueryString() {
-        return queryString;
-    }
-
-    public void setQueryString(String queryString) {
-        this.queryString = queryString;
-    }
-
-    public List<SearchItem> getItemList() {
-        return itemList;
-    }
-
     public void loadSearchResponse() {
         if (queryString != null && !queryString.isEmpty()) {
             getView().showProgressBar();
@@ -83,7 +71,7 @@ public class MainActivityPresenter extends BasePresenter<MainActivityView> {
                 .subscribeWith(new DisposableObserver<String>() {
                     @Override
                     public void onNext(@NonNull String ndbno) {
-                        startNutritionActivity(ndbno);
+                        getView().startDetailsActivity(ndbno);
                     }
 
                     @Override
@@ -98,19 +86,12 @@ public class MainActivityPresenter extends BasePresenter<MainActivityView> {
                 }));
     }
 
-    private void startNutritionActivity(String ndbno){
-        getView().startDetailsActivity(ndbno);
-    }
-
-    private void handleError(Throwable throwable, String additionalInfo) {
-        makeToast("Error (" + additionalInfo + "): " + throwable.getLocalizedMessage());
-    }
-
     private void handleSearchResponse(SearchResult searchResult) {
         if (searchResult != null
                 && searchResult.getSearchList() != null
                 && searchResult.getSearchList().getSearchItems() != null
-                && !searchResult.getSearchList().getSearchItems().isEmpty()) {
+                && !searchResult.getSearchList().getSearchItems().isEmpty()
+                ) {
             itemList = searchResult.getSearchList().getSearchItems();
             getView().putListToAdapter(itemList);
         } else {
@@ -140,5 +121,26 @@ public class MainActivityPresenter extends BasePresenter<MainActivityView> {
             }
         }
         return sb.toString();
+    }
+
+    /**
+     * Handles error by showing error message in toast.
+     * @param throwable thrown by error
+     * @param additionalInfo additional info to show to user
+     */
+    private void handleError(Throwable throwable, String additionalInfo) {
+        makeToast("Error (" + additionalInfo + "): " + throwable.getLocalizedMessage());
+    }
+
+    public String getQueryString() {
+        return queryString;
+    }
+
+    public void setQueryString(String queryString) {
+        this.queryString = queryString;
+    }
+
+    public List<SearchItem> getItemList() {
+        return itemList;
     }
 }
