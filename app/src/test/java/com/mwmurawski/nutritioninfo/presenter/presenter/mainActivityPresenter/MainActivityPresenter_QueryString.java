@@ -26,7 +26,6 @@ import io.reactivex.schedulers.TestScheduler;
 import static junit.framework.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.contains;
-import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -47,10 +46,12 @@ public class MainActivityPresenter_QueryString {
 
     private TestScheduler testScheduler;
     private MainActivityPresenter presenter;
+    private List<SearchItem> searchItems;
 
     @Before
     public void setUp() throws Exception {
         testScheduler = new TestScheduler();
+
         presenter = new MainActivityPresenter(searchRepository, new TestSchedulerProvider(testScheduler));
         presenter.bindView(view);
         presenter.setCompositeDisposable(new CompositeDisposable());
@@ -59,45 +60,45 @@ public class MainActivityPresenter_QueryString {
     @Test
     public void loadResponse_empty() throws Exception {
         presenter.loadSearchResponse();
+
         verify(view, times(1)).makeToast(Strings.EMPTY_STRING);
     }
 
 
     @Test
     public void loadResponse_success() throws Exception {
+        searchItems = new ArrayList<>();
+        searchItems.add(searchItem);
         when(searchRepository.getSearchResult("Butter")).thenReturn(Single.just(searchResult));
         when(searchResult.getSearchList()).thenReturn(searchList);
-
-        List<SearchItem> searchItems = new ArrayList<>();
-        searchItems.add(searchItem);
         when(searchResult.getSearchList().getSearchItems()).thenReturn(searchItems);
 
         presenter.setQueryString("Butter");
         presenter.loadSearchResponse();
-        verify(view, times(1)).showProgressBar();
 
         testScheduler.triggerActions(); //triggers rxJava action
 
-        verify(view, times(1)).hideProgressBar();
-        verify(view, times(1)).putListToAdapter((List<SearchItem>) any());
+        verify(view).showProgressBar();
+        verify(view).hideProgressBar();
+        verify(view).putListToAdapter((List<SearchItem>) any());
     }
 
     @Test
     public void loadResponse_success_empty() throws Exception {
+        searchItems = new ArrayList<>();
+
         when(searchRepository.getSearchResult("Butter")).thenReturn(Single.just(searchResult));
         when(searchResult.getSearchList()).thenReturn(searchList);
-
-        List<SearchItem> searchItems = new ArrayList<>();
         when(searchResult.getSearchList().getSearchItems()).thenReturn(searchItems);
 
         presenter.setQueryString("Butter");
         presenter.loadSearchResponse();
-        verify(view, times(1)).showProgressBar();
 
         testScheduler.triggerActions(); //triggers rxJava action
 
-        verify(view, times(1)).hideProgressBar();
-        verify(view, atLeastOnce()).makeToast(contains(Strings.EMPTY_RESPONSE));
+        verify(view).showProgressBar();
+        verify(view).hideProgressBar();
+        verify(view).makeToast(contains(Strings.EMPTY_RESPONSE));
     }
 
     @Test
@@ -106,12 +107,12 @@ public class MainActivityPresenter_QueryString {
 
         presenter.setQueryString("Butter");
         presenter.loadSearchResponse();
-        verify(view, times(1)).showProgressBar();
 
         testScheduler.triggerActions(); //triggers rxJava action
 
-        verify(view, times(1)).hideProgressBar();
-        verify(view, atLeastOnce()).makeToast(contains(Strings.NETWORK_PROBLEM));
+        verify(view).showProgressBar();
+        verify(view).hideProgressBar();
+        verify(view).makeToast(contains(Strings.NETWORK_PROBLEM));
 
     }
 

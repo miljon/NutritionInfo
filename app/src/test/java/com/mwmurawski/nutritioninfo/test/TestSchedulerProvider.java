@@ -1,6 +1,6 @@
 package com.mwmurawski.nutritioninfo.test;
 
-import com.mwmurawski.nutritioninfo.cons.schedulers.MySchedulers;
+import com.mwmurawski.nutritioninfo.schedulers.MySchedulers;
 
 import io.reactivex.Scheduler;
 import io.reactivex.schedulers.TestScheduler;
