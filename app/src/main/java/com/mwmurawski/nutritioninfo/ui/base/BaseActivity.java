@@ -1,0 +1,82 @@
+package com.mwmurawski.nutritioninfo.ui.base;
+
+import android.os.Bundle;
+import android.support.annotation.LayoutRes;
+import android.support.annotation.Nullable;
+import android.widget.Toast;
+
+import com.mwmurawski.nutritioninfo.App;
+import com.mwmurawski.nutritioninfo.di.component.ApplicationComponent;
+import com.mwmurawski.nutritioninfo.di.component.custom.PresenterProviderInterface;
+
+import butterknife.ButterKnife;
+
+public abstract class BaseActivity<T extends BasePresenter> extends CoreActivity implements BaseView {
+
+    protected PresenterProviderInterface<T> presenterProviderInterface;
+
+    protected T presenter;
+
+    protected ApplicationComponent getApplicationComponent() {
+        return ((App) getApplication()).getApplicationComponent();
+    }
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(getLayoutFile());
+        inject();
+        ButterKnife.bind(this);
+    }
+
+    @SuppressWarnings("unchecked")
+    private boolean restoreOrCreatePresenter() {
+        presenter = presenterCache.getPresenter(getClass().getName());
+        if (presenter == null) {
+            //no cached presenter, create new
+            presenter = presenterProviderInterface.getPresenter();
+            presenterCache.putPresenter(getClass().getName(), presenter);
+            presenter.bindView(this);
+            return false;
+        } else {
+            presenter.bindView(this);
+            return true;
+        }
+    }
+
+    @LayoutRes
+    protected abstract int getLayoutFile();
+
+    /**
+     * Inject all components for this class.
+     */
+    protected abstract void inject();
+
+    public abstract void assignPresenterValuesToViewAfterRestore();
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        if (restoreOrCreatePresenter())
+            assignPresenterValuesToViewAfterRestore();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        if (!isChangingConfigurations()) {
+            // activity is stopped normally, remove the cached presenter so it's not cached
+            // even if activity gets killed
+            presenterCache.removePresenter(presenter);
+        } else {
+            presenterCache.putPresenter(getClass().getName(), presenter);
+        }
+        presenter.unbindView();
+    }
+
+    public void makeToast(String toastText) {
+        Toast.makeText(getApplicationContext(), toastText, Toast.LENGTH_SHORT).show();
+    }
+}

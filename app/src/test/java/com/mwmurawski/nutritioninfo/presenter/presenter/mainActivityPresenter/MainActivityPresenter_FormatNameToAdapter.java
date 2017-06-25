@@ -1,7 +1,7 @@
 package com.mwmurawski.nutritioninfo.presenter.presenter.mainActivityPresenter;
 
-import com.mwmurawski.nutritioninfo.model.search.SearchItem;
-import com.mwmurawski.nutritioninfo.presenter.presenter.MainActivityPresenter;
+import com.mwmurawski.nutritioninfo.data.db.model.search.SearchItem;
+import com.mwmurawski.nutritioninfo.ui.main.MainPresenter;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -25,11 +25,11 @@ public class MainActivityPresenter_FormatNameToAdapter {
 
 
 
-    private MainActivityPresenter presenter;
+    private MainPresenter presenter;
 
     @Before
     public void setUp() throws Exception {
-        presenter = new MainActivityPresenter();
+        presenter = new MainPresenter();
     }
 
 

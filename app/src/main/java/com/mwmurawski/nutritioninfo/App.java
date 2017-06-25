@@ -2,10 +2,9 @@ package com.mwmurawski.nutritioninfo;
 
 import android.app.Application;
 
-import com.mwmurawski.nutritioninfo.presenter.component.ApplicationComponent;
-import com.mwmurawski.nutritioninfo.presenter.component.DaggerApplicationComponent;
-import com.mwmurawski.nutritioninfo.presenter.module.ApplicationModule;
-
+import com.mwmurawski.nutritioninfo.di.component.ApplicationComponent;
+import com.mwmurawski.nutritioninfo.di.component.DaggerApplicationComponent;
+import com.mwmurawski.nutritioninfo.di.module.ApplicationModule;
 
 public class App extends Application {
 

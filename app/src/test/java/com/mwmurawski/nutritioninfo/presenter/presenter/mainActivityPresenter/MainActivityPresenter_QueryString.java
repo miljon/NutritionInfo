@@ -1,13 +1,13 @@
 package com.mwmurawski.nutritioninfo.presenter.presenter.mainActivityPresenter;
 
-import com.mwmurawski.nutritioninfo.cons.Strings;
-import com.mwmurawski.nutritioninfo.model.repository.SearchRepository;
-import com.mwmurawski.nutritioninfo.model.search.SearchItem;
-import com.mwmurawski.nutritioninfo.model.search.SearchList;
-import com.mwmurawski.nutritioninfo.model.search.SearchResult;
-import com.mwmurawski.nutritioninfo.presenter.presenter.MainActivityPresenter;
+import com.mwmurawski.nutritioninfo.data.db.model.repository.SearchRepository;
+import com.mwmurawski.nutritioninfo.data.db.model.search.SearchItem;
+import com.mwmurawski.nutritioninfo.data.db.model.search.SearchList;
+import com.mwmurawski.nutritioninfo.data.db.model.search.SearchResult;
+import com.mwmurawski.nutritioninfo.ui.main.MainPresenter;
 import com.mwmurawski.nutritioninfo.test.TestSchedulerProvider;
-import com.mwmurawski.nutritioninfo.view.interfaces.MainActivityView;
+import com.mwmurawski.nutritioninfo.ui.main.MainView;
+import com.mwmurawski.nutritioninfo.utils.AppConstants;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -30,8 +30,6 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-//@RunWith(PowerMockRunner.class)
-//@PrepareForTest({MainActivityPresenter.class})
 public class MainActivityPresenter_QueryString {
 
     @Rule public MockitoRule mockitoRule = MockitoJUnit.rule();
@@ -40,19 +38,19 @@ public class MainActivityPresenter_QueryString {
 
     @Mock SearchItem searchItem;
     @Mock SearchList searchList;
-    @Mock MainActivityView view;
+    @Mock MainView view;
 
     @Mock SearchResult searchResult;
 
     private TestScheduler testScheduler;
-    private MainActivityPresenter presenter;
+    private MainPresenter presenter;
     private List<SearchItem> searchItems;
 
     @Before
     public void setUp() throws Exception {
         testScheduler = new TestScheduler();
 
-        presenter = new MainActivityPresenter(searchRepository, new TestSchedulerProvider(testScheduler));
+        presenter = new MainPresenter(searchRepository, new TestSchedulerProvider(testScheduler));
         presenter.bindView(view);
         presenter.setCompositeDisposable(new CompositeDisposable());
     }
@@ -61,7 +59,7 @@ public class MainActivityPresenter_QueryString {
     public void loadResponse_empty() throws Exception {
         presenter.loadSearchResponse();
 
-        verify(view, times(1)).makeToast(Strings.EMPTY_STRING);
+        verify(view, times(1)).makeToast(AppConstants.EMPTY_STRING);
     }
 
 
@@ -98,7 +96,7 @@ public class MainActivityPresenter_QueryString {
 
         verify(view).showProgressBar();
         verify(view).hideProgressBar();
-        verify(view).makeToast(contains(Strings.EMPTY_RESPONSE));
+        verify(view).makeToast(contains(AppConstants.EMPTY_RESPONSE));
     }
 
     @Test
@@ -112,7 +110,7 @@ public class MainActivityPresenter_QueryString {
 
         verify(view).showProgressBar();
         verify(view).hideProgressBar();
-        verify(view).makeToast(contains(Strings.NETWORK_PROBLEM));
+        verify(view).makeToast(contains(AppConstants.NETWORK_PROBLEM));
 
     }
 

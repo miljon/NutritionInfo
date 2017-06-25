@@ -7,7 +7,7 @@ import android.support.test.runner.AndroidJUnit4;
 import android.view.View;
 
 import com.arlib.floatingsearchview.FloatingSearchView;
-import com.mwmurawski.nutritioninfo.view.activity.MainActivity;
+import com.mwmurawski.nutritioninfo.ui.main.MainActivity;
 
 import org.hamcrest.Matcher;
 import org.junit.Rule;
