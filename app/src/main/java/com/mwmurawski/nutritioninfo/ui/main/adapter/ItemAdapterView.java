@@ -5,11 +5,11 @@ import com.mwmurawski.nutritioninfo.ui.main.MainPresenter;
 
 import java.util.List;
 
-import io.reactivex.Observable;
+import io.reactivex.Single;
 
 public interface ItemAdapterView {
     void setData(List<SearchItem> listOfItems);
     void setPresenter(MainPresenter presenter);
-    Observable<String> getNdbnoClickObservable();
+    Single<String> getNdbnoClickSingle();
 
 }

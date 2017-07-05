@@ -3,45 +3,63 @@ package com.mwmurawski.nutritioninfo.ui.base;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import com.mwmurawski.nutritioninfo.App;
+import com.mwmurawski.nutritioninfo.di.component.ActivityComponent;
 import com.mwmurawski.nutritioninfo.di.component.ApplicationComponent;
-import com.mwmurawski.nutritioninfo.di.component.custom.PresenterProviderInterface;
+import com.mwmurawski.nutritioninfo.di.component.DaggerActivityComponent;
+import com.mwmurawski.nutritioninfo.di.module.ActivityModule;
 
 import butterknife.ButterKnife;
 
-public abstract class BaseActivity<T extends BasePresenter> extends CoreActivity implements BaseView {
+public abstract class BaseActivity<T extends BasePresenter> extends AppCompatActivity implements BaseView {
 
-    protected PresenterProviderInterface<T> presenterProviderInterface;
+//    protected PresenterProviderInterface<T> presenterProviderInterface;
 
     protected T presenter;
 
+    private ActivityComponent activityComponent;
+
     protected ApplicationComponent getApplicationComponent() {
         return ((App) getApplication()).getApplicationComponent();
+    }
+
+    public ActivityComponent getActivityComponent() {
+        return activityComponent;
     }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutFile());
+
+        activityComponent = DaggerActivityComponent.builder()
+                .applicationComponent(getApplicationComponent())
+                .activityModule(new ActivityModule(this))
+                .build();
         inject();
         ButterKnife.bind(this);
     }
 
     @SuppressWarnings("unchecked")
     private boolean restoreOrCreatePresenter() {
-        presenter = presenterCache.getPresenter(getClass().getName());
+        presenter = getPresenterCache().getPresenter(getClass().getName());
         if (presenter == null) {
             //no cached presenter, create new
-            presenter = presenterProviderInterface.getPresenter();
-            presenterCache.putPresenter(getClass().getName(), presenter);
+            injectPresenter();
+            getPresenterCache().putPresenter(getClass().getName(), presenter);
             presenter.bindView(this);
             return false;
         } else {
             presenter.bindView(this);
             return true;
         }
+    }
+
+    protected void setPresenter(T presenter){
+        this.presenter = presenter;
     }
 
     @LayoutRes
@@ -51,6 +69,8 @@ public abstract class BaseActivity<T extends BasePresenter> extends CoreActivity
      * Inject all components for this class.
      */
     protected abstract void inject();
+
+    protected abstract void injectPresenter();
 
     public abstract void assignPresenterValuesToViewAfterRestore();
 
@@ -69,14 +89,18 @@ public abstract class BaseActivity<T extends BasePresenter> extends CoreActivity
         if (!isChangingConfigurations()) {
             // activity is stopped normally, remove the cached presenter so it's not cached
             // even if activity gets killed
-            presenterCache.removePresenter(presenter);
+            getPresenterCache().removePresenter(presenter);
         } else {
-            presenterCache.putPresenter(getClass().getName(), presenter);
+            getPresenterCache().putPresenter(getClass().getName(), presenter);
         }
         presenter.unbindView();
     }
 
     public void makeToast(String toastText) {
         Toast.makeText(getApplicationContext(), toastText, Toast.LENGTH_SHORT).show();
+    }
+
+    public PresenterCache getPresenterCache(){
+        return activityComponent.getPresenterCache();
     }
 }

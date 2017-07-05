@@ -9,10 +9,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.mwmurawski.nutritioninfo.R;
-import com.mwmurawski.nutritioninfo.di.component.DaggerFoodDetailsComponent;
-import com.mwmurawski.nutritioninfo.ui.base.BaseActivity;
 import com.mwmurawski.nutritioninfo.data.db.model.report.Nutrient;
-import com.mwmurawski.nutritioninfo.di.component.FoodDetailsComponent;
+import com.mwmurawski.nutritioninfo.ui.base.BaseActivity;
 import com.mwmurawski.nutritioninfo.ui.fooddetails.adapter.ItemDetailsAdapterView;
 
 import java.util.List;
@@ -57,8 +55,12 @@ public class FoodDetailsActivity extends BaseActivity<FoodDetailsPresenter> impl
 
     @Override
     protected void inject() {
-        presenterProviderInterface = DaggerFoodDetailsComponent.builder().applicationComponent(getApplicationComponent()).build();
-        ((FoodDetailsComponent)presenterProviderInterface).inject(this);
+        getActivityComponent().inject(this);
+    }
+
+    @Override
+    protected void injectPresenter() {
+        setPresenter(getActivityComponent().getFoodDetailsPresenter());
     }
 
     @Override

@@ -9,49 +9,26 @@ import android.widget.TextView;
 
 import com.mwmurawski.nutritioninfo.R;
 import com.mwmurawski.nutritioninfo.data.db.model.search.SearchItem;
-import com.mwmurawski.nutritioninfo.di.component.DaggerAdapterComponent;
 import com.mwmurawski.nutritioninfo.ui.main.MainPresenter;
 
+import java.util.ArrayList;
 import java.util.List;
-
-import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.Observable;
-import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.subjects.PublishSubject;
+import io.reactivex.Single;
 
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder> implements ItemAdapterView {
-
-    /**
-     * ViewHolder for Item
-     */
-    static class ItemViewHolder extends RecyclerView.ViewHolder {
-
-        @Nullable @BindView(R.id.maintext_line1) TextView mainText1;
-
-        ItemViewHolder(View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
-        }
-    }
 
     //ITEM ADAPTER CLASS
     private List<SearchItem> listOfItems;
     private MainPresenter presenter;
 
-    @Inject CompositeDisposable compositeDisposable;
+    private Single<String> single;
 
-    private final PublishSubject<String> publishSubject;
-
-    public ItemAdapter(List<SearchItem> listOfItems, MainPresenter presenter) {
-        this.listOfItems = listOfItems;
+    public ItemAdapter(MainPresenter presenter) {
         this.presenter = presenter;
-
-        DaggerAdapterComponent.builder().build().inject(this);
-
-        publishSubject = PublishSubject.create();
+        listOfItems = new ArrayList<>();
     }
 
     @Override
@@ -68,7 +45,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    publishSubject.onNext(item.getNdbno());
+                    single = Single.just(item.getNdbno());
                 }
             });
         }
@@ -80,8 +57,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
     }
 
     @Override
-    public Observable<String> getNdbnoClickObservable(){
-        return publishSubject;
+    public Single<String> getNdbnoClickSingle(){
+        return single;
     }
 
 
@@ -92,5 +69,19 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
     @Override
     public void setPresenter(MainPresenter presenter) {
         this.presenter = presenter;
+    }
+
+
+    /**
+     * ViewHolder for Item
+     */
+    static class ItemViewHolder extends RecyclerView.ViewHolder {
+
+        @Nullable @BindView(R.id.maintext_line1) TextView mainText1;
+
+        ItemViewHolder(View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+        }
     }
 }

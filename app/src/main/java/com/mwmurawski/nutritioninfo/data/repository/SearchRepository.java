@@ -1,4 +1,4 @@
-package com.mwmurawski.nutritioninfo.data.db.model.repository;
+package com.mwmurawski.nutritioninfo.data.repository;
 
 import com.mwmurawski.nutritioninfo.utils.AppConstants;
 import com.mwmurawski.nutritioninfo.data.db.model.report.FoodReport;

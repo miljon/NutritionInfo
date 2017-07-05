@@ -1,13 +1,13 @@
 package com.mwmurawski.nutritioninfo.presenter.presenter.mainActivityPresenter;
 
-import com.mwmurawski.nutritioninfo.data.db.model.repository.SearchRepository;
 import com.mwmurawski.nutritioninfo.data.db.model.search.SearchItem;
 import com.mwmurawski.nutritioninfo.data.db.model.search.SearchList;
 import com.mwmurawski.nutritioninfo.data.db.model.search.SearchResult;
+import com.mwmurawski.nutritioninfo.data.repository.SearchRepository;
 import com.mwmurawski.nutritioninfo.ui.main.MainPresenter;
-import com.mwmurawski.nutritioninfo.test.TestSchedulerProvider;
 import com.mwmurawski.nutritioninfo.ui.main.MainView;
 import com.mwmurawski.nutritioninfo.utils.AppConstants;
+import com.test.TestSchedulerProvider;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -25,12 +25,13 @@ import io.reactivex.schedulers.TestScheduler;
 
 import static junit.framework.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.contains;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class MainActivityPresenter_QueryString {
+public class MainActivityPresenterTest {
 
     @Rule public MockitoRule mockitoRule = MockitoJUnit.rule();
 
@@ -50,9 +51,10 @@ public class MainActivityPresenter_QueryString {
     public void setUp() throws Exception {
         testScheduler = new TestScheduler();
 
-        presenter = new MainPresenter(searchRepository, new TestSchedulerProvider(testScheduler));
-        presenter.bindView(view);
+        presenter = new MainPresenter(searchRepository);
+        presenter.setSchedulerProvider(new TestSchedulerProvider(testScheduler));
         presenter.setCompositeDisposable(new CompositeDisposable());
+        presenter.bindView(view);
     }
 
     @Test
@@ -114,11 +116,30 @@ public class MainActivityPresenter_QueryString {
 
     }
 
+
     @Test
-    public void makeToast() throws Exception {
-        presenter.makeToast("message");
-        verify(view, times(1)).makeToast("message");
+    public void startObserveFoodItemsClick_success() throws Exception {
+        presenter.startObserveFoodItemsClick(Single.just("Butter"));
+
+        testScheduler.triggerActions();
+
+        verify(view).startDetailsActivity(anyString());
     }
+
+    @Test
+    public void startObserveFoodItemsClick_error() throws Exception {
+        presenter.startObserveFoodItemsClick(Single.<String>error(new Throwable("Error")));
+
+        testScheduler.triggerActions();
+
+        verify(view).makeToast(contains("Error"));
+    }
+
+//    @Test
+//    public void makeToast() throws Exception {
+//        presenter.makeToast("message");
+//        verify(view, times(1)).makeToast("message");
+//    }
 
     @Test
     public void setQueryString() throws Exception {
@@ -128,7 +149,10 @@ public class MainActivityPresenter_QueryString {
         assertEquals("String should be equal", queryString,presenter.getQueryString());
     }
 
-
-
-
+    @Test
+    public void getItemList() throws Exception {
+        searchItems = new ArrayList<>();
+        presenter.setItemList(new ArrayList<SearchItem>());
+        assertEquals(presenter.getItemList(), searchItems);
+    }
 }

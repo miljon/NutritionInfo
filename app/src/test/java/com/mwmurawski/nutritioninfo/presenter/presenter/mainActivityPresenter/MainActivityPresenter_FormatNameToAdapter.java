@@ -1,12 +1,14 @@
 package com.mwmurawski.nutritioninfo.presenter.presenter.mainActivityPresenter;
 
 import com.mwmurawski.nutritioninfo.data.db.model.search.SearchItem;
+import com.mwmurawski.nutritioninfo.data.repository.SearchRepository;
 import com.mwmurawski.nutritioninfo.ui.main.MainPresenter;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.mockito.Mock;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -23,13 +25,13 @@ public class MainActivityPresenter_FormatNameToAdapter {
     @Parameterized.Parameter(1)
     public String outputString;
 
-
+    @Mock SearchRepository searchRepository;
 
     private MainPresenter presenter;
 
     @Before
     public void setUp() throws Exception {
-        presenter = new MainPresenter();
+        presenter = new MainPresenter(searchRepository);
     }
 
 

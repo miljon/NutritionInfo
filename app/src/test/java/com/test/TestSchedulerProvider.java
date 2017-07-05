@@ -1,4 +1,4 @@
-package com.mwmurawski.nutritioninfo.test;
+package com.test;
 
 import com.mwmurawski.nutritioninfo.utils.rx.schedulers.SchedulerProvider;
 

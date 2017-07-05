@@ -9,10 +9,8 @@ import android.widget.ProgressBar;
 
 import com.arlib.floatingsearchview.FloatingSearchView;
 import com.mwmurawski.nutritioninfo.R;
-import com.mwmurawski.nutritioninfo.di.component.MainComponent;
-import com.mwmurawski.nutritioninfo.ui.base.BaseActivity;
 import com.mwmurawski.nutritioninfo.data.db.model.search.SearchItem;
-import com.mwmurawski.nutritioninfo.di.component.DaggerMainComponent;
+import com.mwmurawski.nutritioninfo.ui.base.BaseActivity;
 import com.mwmurawski.nutritioninfo.ui.fooddetails.FoodDetailsActivity;
 import com.mwmurawski.nutritioninfo.ui.main.adapter.ItemAdapterView;
 
@@ -38,9 +36,14 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
 
     @Override
     protected void inject() {
-        presenterProviderInterface = DaggerMainComponent.builder().applicationComponent(getApplicationComponent()).build();
-        ((MainComponent)presenterProviderInterface).inject(this);
+        getActivityComponent().inject(this);
     }
+
+    @Override
+    protected void injectPresenter() {
+        setPresenter(getActivityComponent().getMainPresenter());
+    }
+
 
     @Override
     public void assignPresenterValuesToViewAfterRestore() {
@@ -63,7 +66,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
 
-        recyclerView.setAdapter((RecyclerView.Adapter) itemAdapter);
 
         setSearchListener();
         setSwipeSearchListener();
@@ -73,8 +75,10 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
     protected void onStart() {
         super.onStart();
 
+        recyclerView.setAdapter((RecyclerView.Adapter) itemAdapter);
+
         presenter.bindView(this);
-        presenter.startObserveFoodItemsClick(itemAdapter.getNdbnoClickObservable());
+        presenter.startObserveFoodItemsClick(itemAdapter.getNdbnoClickSingle());
     }
 
     @Override
