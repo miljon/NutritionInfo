@@ -12,10 +12,12 @@ import javax.inject.Inject;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.observers.DisposableSingleObserver;
 
+/**
+ * Presenter for FoodDetailsActivity
+ */
 public class FoodDetailsPresenter extends BasePresenter<FoodDetailsView> {
 
-    private SearchRepository searchRepository;
-
+    private final SearchRepository searchRepository;
     private List<Nutrient> nutrientList;
 
     @Inject
@@ -23,14 +25,30 @@ public class FoodDetailsPresenter extends BasePresenter<FoodDetailsView> {
         this.searchRepository = searchRepository;
     }
 
-    public String setNutritionNameText(Nutrient nutrient) {
+    /**
+     * Gets name of nutrient
+     * @param nutrient object to fetch name
+     * @return name of nutrient
+     */
+    public String getNutritionName(final Nutrient nutrient) {
         return nutrient.getName();
     }
 
-    public String setNutritionValueText(Nutrient nutrient) {
+    /**
+     * Helps to get nutrient values with proper units.
+     * @param nutrient object to fetch proper value and units
+     * @return formatted value and units in format: "[VALUE] [UNIT]"
+     */
+    public String getNutritionValueAndUnit(final Nutrient nutrient) {
         return nutrient.getValue() + " " + nutrient.getUnit();
     }
 
+    /**
+     * Loads nutrient information,
+     * if success opens FoodDetailsActivity,
+     * if error comes back to MainActivity, and show error message.
+     * @param ndbno nutrient database number
+     */
     public void loadNutritionDetails(final String ndbno){
         getView().showProgressBar();
         getCompositeDisposable().add(searchRepository.getFoodReport(ndbno)
@@ -54,7 +72,13 @@ public class FoodDetailsPresenter extends BasePresenter<FoodDetailsView> {
                 }));
     }
 
-    private String formatFoodName(String name) {
+    /**
+     * Formats name of food,
+     * after every coma makes new line,
+     * @param name name of food
+     * @return formatted name
+     */
+    private String formatFoodName(final String name) {
         final String[] nameArray = name.split(",");
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < nameArray.length - 1; i++) {
@@ -65,8 +89,11 @@ public class FoodDetailsPresenter extends BasePresenter<FoodDetailsView> {
         return sb.toString();
     }
 
-
-    public List<Nutrient> getItemList() {
+    /**
+     * Gets list of nutritions
+     * @return list of nutritions
+     */
+    List<Nutrient> getItemList() {
         return nutrientList;
     }
 }

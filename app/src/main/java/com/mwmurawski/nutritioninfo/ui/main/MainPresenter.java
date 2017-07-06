@@ -87,15 +87,17 @@ public class MainPresenter extends BasePresenter<MainView> {
     }
 
     /**
-     * Random json output:
+     * Formats name of nutrient to desired format, in this case,
+     * after every coma makes new line, first letter is always upper case.
+     * Example of json output:
      * "name": "PLUM, MASHUPS, ORGANIC APPLE SAUCE + STRAWBERRIES & BANANAS, STRAWBERRY BANANA!, UPC: 846675002198"
      * @param searchItem item from list of items provided by network request
      * @return formatted string with new line for every coma, if line contains "UPC:" then it is
      */
-    public String formatNameToAdapter(SearchItem searchItem) {
+    public String formatNameToAdapter(final SearchItem searchItem) {
         final String name = searchItem.getName();
-        StringBuilder sb = new StringBuilder();
-        String[] nameLines = name.split(",");
+        final StringBuilder sb = new StringBuilder();
+        final String[] nameLines = name.split(",");
         for (int i = 0; i < nameLines.length - 1; i++) {
             if (!(sb.length() == 0)) sb.append("\n");
             if (!nameLines[i].contains("UPC:")) {

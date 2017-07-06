@@ -34,8 +34,8 @@ public class ItemDetailsAdapter extends RecyclerView.Adapter<ItemDetailsAdapter.
     @Override
     public void onBindViewHolder(DetailsViewHolder holder, int position) {
         final Nutrient nutrient = nutrientList.get(position);
-        holder.nutritionName.setText(presenter.setNutritionNameText(nutrient));
-        holder.nutritionValue.setText(presenter.setNutritionValueText(nutrient));
+        holder.nutritionName.setText(presenter.getNutritionName(nutrient));
+        holder.nutritionValue.setText(presenter.getNutritionValueAndUnit(nutrient));
     }
 
     @Override
