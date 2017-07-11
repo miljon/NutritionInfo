@@ -103,4 +103,8 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     public PresenterCache getPresenterCache(){
         return activityComponent.getPresenterCache();
     }
+
+    public T getPresenter() {
+        return presenter;
+    }
 }

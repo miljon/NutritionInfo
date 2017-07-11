@@ -1,8 +1,7 @@
-package com.mwmurawski.nutritioninfo.presenter.presenter.mainActivityPresenter;
+package com.mwmurawski.nutritioninfo.ui.main;
 
 import com.mwmurawski.nutritioninfo.data.db.model.search.SearchItem;
 import com.mwmurawski.nutritioninfo.data.repository.SearchRepository;
-import com.mwmurawski.nutritioninfo.ui.main.MainPresenter;
 
 import org.junit.Before;
 import org.junit.Test;

@@ -1,15 +1,19 @@
-package com.mwmurawski.nutritioninfo;
+package com.mwmurawski.nutritioninfo.ui.main;
 
 import android.support.test.espresso.UiController;
 import android.support.test.espresso.ViewAction;
+import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.view.View;
 
 import com.arlib.floatingsearchview.FloatingSearchView;
-import com.mwmurawski.nutritioninfo.ui.main.MainActivity;
+import com.mwmurawski.nutritioninfo.R;
+
+import junit.framework.Assert;
 
 import org.hamcrest.Matcher;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,16 +37,48 @@ public class MainActivityTest {
     @Rule
     public ActivityTestRule<MainActivity> activityTestRule = new ActivityTestRule<MainActivity>(MainActivity.class);
 
+    @Before
+    public void setUp() throws Exception {
+
+
+    }
+
     @Test
     public void checkTextImput() throws Exception {
-        onView(withId(R.id.floating_search_view)).perform(click());
+        final String QUERY_STRING = "Butter";
+
+        onView(ViewMatchers.withId(R.id.floating_search_view)).perform(click());
+
+        onView(withId(R.id.floating_search_view)).perform(setText(QUERY_STRING));
+
+        onView(withId(R.id.floating_search_view)).perform(closeSoftKeyboard());
+
+
+
+        Assert.assertEquals(QUERY_STRING, activityTestRule.getActivity().getPresenter().getQueryString());
+    }
+
+    @Test
+    public void checkLoadedAnswers() throws Exception {
+        onView(ViewMatchers.withId(R.id.floating_search_view)).perform(click());
 
         onView(withId(R.id.floating_search_view)).perform(setText("Butter"));
 
         onView(withId(R.id.floating_search_view)).perform(closeSoftKeyboard());
 
 
+
+
+        Assert.assertEquals("Butter", activityTestRule.getActivity().getPresenter().getQueryString());
     }
+
+
+
+
+
+
+
+
 
 
     public static ViewAction setText(final String text) {

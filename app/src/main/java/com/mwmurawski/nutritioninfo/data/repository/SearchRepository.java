@@ -12,12 +12,10 @@ import retrofit2.Retrofit;
 
 
 public class SearchRepository {
-    private Retrofit retrofit;
     private SearchService searchService;
 
     @Inject
     public SearchRepository(Retrofit retrofit) {
-        this.retrofit = retrofit;
         searchService = retrofit.create(SearchService.class);
     }
 

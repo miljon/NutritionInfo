@@ -53,9 +53,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
 
     }
 
-    /*
-    ________LIFE CYCLE METHODS________
-     */
+//    ________LIFE CYCLE METHODS________
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +76,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
         recyclerView.setAdapter((RecyclerView.Adapter) itemAdapter);
 
         presenter.bindView(this);
+        if (itemAdapter != null && ((RecyclerView.Adapter) itemAdapter).getItemCount() > 0)
         presenter.startObserveFoodItemsClick(itemAdapter.getNdbnoClickSingle());
     }
 
