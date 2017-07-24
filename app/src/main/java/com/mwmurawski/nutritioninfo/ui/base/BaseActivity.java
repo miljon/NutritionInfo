@@ -83,9 +83,8 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
-
+    protected void onDestroy() {
+        super.onDestroy();
         if (!isChangingConfigurations()) {
             // activity is stopped normally, remove the cached presenter so it's not cached
             // even if activity gets killed
@@ -93,6 +92,11 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         } else {
             getPresenterCache().putPresenter(getClass().getName(), presenter);
         }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
         presenter.unbindView();
     }
 
