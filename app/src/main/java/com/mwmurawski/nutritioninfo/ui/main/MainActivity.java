@@ -59,11 +59,9 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
         //bindView
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
-
 
         setSearchListener();
         setSwipeSearchListener();

@@ -76,11 +76,8 @@ public class FoodDetailsActivity extends BaseActivity<FoodDetailsPresenter> impl
 
     @Override
     public void showNutritionDetails(String name, List<Nutrient> nutrients) {
-        //set name
-        detailsInfo.setText(name);
-
-        //set list of nutritions
-        itemAdapter.setData(nutrients);
+        detailsInfo.setText(name); //set name
+        itemAdapter.setData(nutrients); //set list of nutritions
     }
 
     @Override

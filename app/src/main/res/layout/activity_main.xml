@@ -7,11 +7,12 @@
     android:layout_height="match_parent"
     tools:context="com.mwmurawski.nutritioninfo.ui.main.MainActivity">
 
+
     <LinearLayout
+        android:paddingTop="60dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_below="@+id/floating_search_view"
         android:clipToPadding="false"
         >
 
@@ -38,7 +39,7 @@
     <com.arlib.floatingsearchview.FloatingSearchView
         android:id="@+id/floating_search_view"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="match_parent"
         app:floatingSearch_searchBarMarginLeft="@dimen/search_view_inset"
         app:floatingSearch_searchBarMarginTop="@dimen/search_view_inset"
         app:floatingSearch_searchBarMarginRight="@dimen/search_view_inset"
