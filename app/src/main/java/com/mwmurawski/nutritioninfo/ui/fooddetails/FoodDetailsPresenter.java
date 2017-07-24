@@ -52,8 +52,8 @@ public class FoodDetailsPresenter extends BasePresenter<FoodDetailsView> {
     public void loadNutritionDetails(final String ndbno){
         getView().showProgressBar();
         getCompositeDisposable().add(searchRepository.getFoodReport(ndbno)
-                .subscribeOn(getSchedulerProvider().io())
-                .observeOn(getSchedulerProvider().ui())
+                .subscribeOn(getScheduler().io())
+                .observeOn(getScheduler().ui())
                 .subscribeWith(new DisposableSingleObserver<FoodReport>() {
                     @Override
                     public void onSuccess(@NonNull FoodReport foodReport) {
@@ -81,10 +81,10 @@ public class FoodDetailsPresenter extends BasePresenter<FoodDetailsView> {
     private String formatFoodName(final String name) {
         final String[] nameArray = name.split(",");
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < nameArray.length - 1; i++) {
+        for (int i = 0; i < nameArray.length; i++) {
             if (!(sb.length() == 0)) sb.append("\n");
 
-            sb.append(nameArray[i]);
+            sb.append(nameArray[i].trim());
         }
         return sb.toString();
     }

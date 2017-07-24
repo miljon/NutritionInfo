@@ -32,8 +32,8 @@ public class MainPresenter extends BasePresenter<MainView> {
         if (queryString != null && !queryString.isEmpty()) {
             getView().showProgressBar();
             getCompositeDisposable().add(searchRepository.getSearchResult(queryString)
-                    .subscribeOn(getSchedulerProvider().io())
-                    .observeOn(getSchedulerProvider().ui())
+                    .subscribeOn(getScheduler().io())
+                    .observeOn(getScheduler().ui())
                     .subscribeWith(new DisposableSingleObserver<SearchResult>() {
                         @Override
                         public void onSuccess(@NonNull SearchResult searchResult) {
@@ -43,7 +43,7 @@ public class MainPresenter extends BasePresenter<MainView> {
 
                         @Override
                         public void onError(@NonNull Throwable e) {
-                            handleError(e, AppConstants.NETWORK_PROBLEM);
+                            handleError(AppConstants.NETWORK_PROBLEM);
                             getView().hideProgressBar();
                         }
                     }));
@@ -52,10 +52,10 @@ public class MainPresenter extends BasePresenter<MainView> {
         }
     }
 
-    public void startObserveFoodItemsClick(Single<String> observable){
-        getCompositeDisposable().add(observable
-                .subscribeOn(getSchedulerProvider().io())
-                .observeOn(getSchedulerProvider().ui())
+    public void startObserveFoodItemsClick(Single<String> single){
+        getCompositeDisposable().add(single
+                .subscribeOn(getScheduler().io())
+                .observeOn(getScheduler().ui())
                 .subscribeWith(new DisposableSingleObserver<String>() {
                     @Override
                     public void onSuccess(@NonNull String ndbno) {
@@ -64,7 +64,7 @@ public class MainPresenter extends BasePresenter<MainView> {
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        handleError(e, AppConstants.FOOD_DETAILS_PROBLEM);
+                        handleError(e, AppConstants.OBSERVER_PROBLEM);
                     }
                 }));
     }
@@ -75,7 +75,7 @@ public class MainPresenter extends BasePresenter<MainView> {
                 && searchResult.getSearchList().getSearchItems() != null
                 && !searchResult.getSearchList().getSearchItems().isEmpty()
                 ) {
-            setItemList(searchResult.getSearchList().getSearchItems());
+            itemList = searchResult.getSearchList().getSearchItems();
             getView().putListToAdapter(itemList);
         } else {
             handleError(new Throwable(AppConstants.EMPTY_RESPONSE), AppConstants.EMPTY_RESPONSE);
@@ -116,6 +116,13 @@ public class MainPresenter extends BasePresenter<MainView> {
     private void handleError(Throwable throwable, String additionalInfo) {
         makeToast("Error (" + additionalInfo + "): " + throwable.getLocalizedMessage());
     }
+    /**
+     * Handles error by showing error message in toast.
+     * @param additionalInfo additional info to show to user
+     */
+    private void handleError(String additionalInfo) {
+        makeToast(additionalInfo);
+    }
 
     public String getQueryString() {
         return queryString;
@@ -131,5 +138,9 @@ public class MainPresenter extends BasePresenter<MainView> {
 
     public void setItemList(List<SearchItem> itemList) {
         this.itemList = itemList;
+    }
+
+    public SearchRepository getSearchRepository() {
+        return searchRepository;
     }
 }

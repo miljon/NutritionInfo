@@ -73,11 +73,8 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
     protected void onStart() {
         super.onStart();
 
-        recyclerView.setAdapter((RecyclerView.Adapter) itemAdapter);
-
         presenter.bindView(this);
-        if (itemAdapter != null && ((RecyclerView.Adapter) itemAdapter).getItemCount() > 0)
-        presenter.startObserveFoodItemsClick(itemAdapter.getNdbnoClickSingle());
+        recyclerView.setAdapter((RecyclerView.Adapter) itemAdapter);
     }
 
     @Override

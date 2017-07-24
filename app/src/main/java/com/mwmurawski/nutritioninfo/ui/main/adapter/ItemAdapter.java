@@ -24,7 +24,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
     private List<SearchItem> listOfItems;
     private MainPresenter presenter;
 
-    private Single<String> single;
+//    private Single<String> single;
 
     public ItemAdapter(MainPresenter presenter) {
         this.presenter = presenter;
@@ -45,7 +45,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    single = Single.just(item.getNdbno());
+                    presenter.startObserveFoodItemsClick(Single.just(item.getNdbno()));
                 }
             });
         }
@@ -55,12 +55,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
     public int getItemCount() {
         return listOfItems == null ? 0 : listOfItems.size();
     }
-
-    @Override
-    public Single<String> getNdbnoClickSingle(){
-        return single;
-    }
-
 
     public void setData(List<SearchItem> listOfItems){
         this.listOfItems = listOfItems;

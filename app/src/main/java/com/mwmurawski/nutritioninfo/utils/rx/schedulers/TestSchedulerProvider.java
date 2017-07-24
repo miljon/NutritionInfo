@@ -1,10 +1,7 @@
-package com.mwmurawski.nutritioninfo.test;
-
-import com.mwmurawski.nutritioninfo.utils.rx.schedulers.SchedulerProvider;
+package com.mwmurawski.nutritioninfo.utils.rx.schedulers;
 
 import io.reactivex.Scheduler;
 import io.reactivex.schedulers.TestScheduler;
-
 
 public class TestSchedulerProvider implements SchedulerProvider {
 

@@ -1,0 +1,716 @@
+{
+
+    "list": {
+        "q": "butter",
+        "sr": "28",
+        "ds": "any",
+        "start": 0,
+        "end": 100,
+        "total": 4377,
+        "group": "",
+        "sort": "r",
+        "item": [
+            {
+                "offset": 0,
+                "group": "Branded Food Products Database",
+                "name": "BREYERS, BLASTS!, FROZEN DAIRY DESSERT, REESE'S PEANUT BUTTER CUPS CHOCOLATE FLAVOR WITH REESE'S PEANUT BUTTER SWIRL AND REESE'S PEANUT BUTTER CUP PIECES, UPC: 077567205186",
+                "ndbno": "45093459",
+                "ds": "BL"
+            },
+            {
+                "offset": 1,
+                "group": "Branded Food Products Database",
+                "name": "PEANUT BUTTER CREME PIES, PEANUT BUTTER COOKIES WITH PEANUT BUTTER CREME FILLING, UPC: 024300044106",
+                "ndbno": "BREYERS, BLASTS!, FROZEN DAIRY DESSERT, REESE'S PEANUT BUTTER CUPS CHOCOLATE FLAVOR WITH REESE'S PEANUT BUTTER SWIRL AND REESE'S PEANUT BUTTER CUP PIECES, UPC: 077567205186",
+                "ds": "BL"
+            },
+            {
+                "offset": 2,
+                "group": "Fats and Oils",
+                "name": "Margarine-like, margarine-butter blend, soybean oil and butter",
+                "ndbno": "04585",
+                "ds": "SR"
+            },
+            {
+                "offset": 3,
+                "group": "Branded Food Products Database",
+                "name": "WEIS, LIGHT ICE CREAM, BUTTER PECANS IN LIGHT ICE CREAM, BUTTER PECAN, UPC: 041497013678",
+                "ndbno": "45005189",
+                "ds": "BL"
+            },
+            {
+                "offset": 4,
+                "group": "Branded Food Products Database",
+                "name": "PEANUT BUTTER & CO, PEANUT BUTTER BLENDED WITH DARK CHOCOLATE, UPC: 851087000304",
+                "ndbno": "45005738",
+                "ds": "BL"
+            },
+            {
+                "offset": 5,
+                "group": "Branded Food Products Database",
+                "name": "SKIPPY, FUEL THE FUN!, SUPER CHUNK PEANUT BUTTER SPREAD, PEANUT BUTTER, UPC: 048001006782",
+                "ndbno": "45013329",
+                "ds": "BL"
+            },
+            {
+                "offset": 6,
+                "group": "Branded Food Products Database",
+                "name": "COLD STONE CREAMERY, CHOCOLATE COVERED PEANUT BUTTER CREAM EGG WITH BROWNIE BITS, PEANUT BUTTER MADNESS, UPC: 041376708671",
+                "ndbno": "45014899",
+                "ds": "BL"
+            },
+            {
+                "offset": 7,
+                "group": "Branded Food Products Database",
+                "name": "UTZ, PEANUT BUTTER FILLED PRETZELS, PEANUT BUTTER, UPC: 041780022301",
+                "ndbno": "45015542",
+                "ds": "BL"
+            },
+            {
+                "offset": 8,
+                "group": "Branded Food Products Database",
+                "name": "VOORTMAN, PEANUT BUTTER WAFERS, SUGAR FREE, PEANUT BUTTER, UPC: 067312005437",
+                "ndbno": "45016491",
+                "ds": "BL"
+            },
+            {
+                "offset": 9,
+                "group": "Branded Food Products Database",
+                "name": "WEIS QUALITY, POTATO CLASSICS, CREAMY BUTTER, REAL MASHED POTATOES SEASONED WITH BUTTER, UPC: 041497311163",
+                "ndbno": "45017392",
+                "ds": "BL"
+            },
+            {
+                "offset": 10,
+                "group": "Branded Food Products Database",
+                "name": "GRANDMA'S, HOMESTYLE PEANUT BUTTER BIG COOKIE, PEANUT BUTTER, UPC: 028400440875",
+                "ndbno": "45021118",
+                "ds": "BL"
+            },
+            {
+                "offset": 11,
+                "group": "Branded Food Products Database",
+                "name": "MRS. CUBBISON'S, BUTTER & GARLIC CROUTONS, BUTTER & GARLIC, UPC: 074714085653",
+                "ndbno": "45021625",
+                "ds": "BL"
+            },
+            {
+                "offset": 12,
+                "group": "Branded Food Products Database",
+                "name": "BARNEY BUTTER, ALMOND BUTTER, UPC: 094922667311",
+                "ndbno": "45036114",
+                "ds": "BL"
+            },
+            {
+                "offset": 13,
+                "group": "Branded Food Products Database",
+                "name": "CHALLENGE BUTTER, GRADE AA SALTED BUTTER, UPC: 047200152641",
+                "ndbno": "45037291",
+                "ds": "BL"
+            },
+            {
+                "offset": 14,
+                "group": "Branded Food Products Database",
+                "name": "SHOPRITE, ORGANIC CHUNKY PEANUT BUTTER, PEANUT, BUTTER, UPC: 041190043538",
+                "ndbno": "45038484",
+                "ds": "BL"
+            },
+            {
+                "offset": 15,
+                "group": "Branded Food Products Database",
+                "name": "LARABAR, PEANUT BUTTER CHOCOLATE CHIP, PEANUT BUTTER, UPC: 021908509358",
+                "ndbno": "45039811",
+                "ds": "BL"
+            },
+            {
+                "offset": 16,
+                "group": "Branded Food Products Database",
+                "name": "JOLLY TIME, XTRA BUTTER MICROWAVE POP CORN, BUTTER, UPC: 028190008477",
+                "ndbno": "45043440",
+                "ds": "BL"
+            },
+            {
+                "offset": 17,
+                "group": "Branded Food Products Database",
+                "name": "BUTTER MINTS MADE WITH CREAMY BUTTER, UPC: 072376906866",
+                "ndbno": "45053371",
+                "ds": "BL"
+            },
+            {
+                "offset": 18,
+                "group": "Branded Food Products Database",
+                "name": "WILD FRIENDS, PEANUT BUTTER WITH CRUNCHY PRETZEL BUTS, PEANUT BUTTER, UPC: 00853547003061",
+                "ndbno": "45064086",
+                "ds": "BL"
+            },
+            {
+                "offset": 19,
+                "group": "Branded Food Products Database",
+                "name": "BUTTER CRISPS BUTTER WAFER COOKIES, UPC: 749880110798",
+                "ndbno": "45080556",
+                "ds": "BL"
+            },
+            {
+                "offset": 20,
+                "group": "Branded Food Products Database",
+                "name": "ELLIOT'S ADULT NUT BUTTERS, GARAM MASALA PEANUT BUTTER, UPC: 851586006012",
+                "ndbno": "45087832",
+                "ds": "BL"
+            },
+            {
+                "offset": 21,
+                "group": "Branded Food Products Database",
+                "name": "NUT BUTTER FILLED COCONUT ALMOND BUTTER, UPC: 722252268020",
+                "ndbno": "45091165",
+                "ds": "BL"
+            },
+            {
+                "offset": 22,
+                "group": "Branded Food Products Database",
+                "name": "KLONDIKE, REESE'S, BARS, REESE'S PEANUT BUTTER LIGHT* ICE CREAM WITH REESE'S PEANUT BUTTER CUP PIECES IN A MILK CHOCOLATE FLAVORED COATING, UPC: 075856024159",
+                "ndbno": "45092057",
+                "ds": "BL"
+            },
+            {
+                "offset": 23,
+                "group": "Branded Food Products Database",
+                "name": "BREYERS, BLASTS!, PEANUT BUTTER LIGHT ICE CREAM* WITH REESE'S PEANUT BUTTER CUP PIECES AND A FUDGE SWIRL, UPC: 077567275066",
+                "ndbno": "45093419",
+                "ds": "BL"
+            },
+            {
+                "offset": 24,
+                "group": "Branded Food Products Database",
+                "name": "BREYERS, DARK CHOCOLATE ICE CREAM WITH PEANUT BUTTER SWIRL, CHOCOLATE PEANUT BUTTER, UPC: 077567603326",
+                "ndbno": "45093440",
+                "ds": "BL"
+            },
+            {
+                "offset": 25,
+                "group": "Branded Food Products Database",
+                "name": "BREYERS, FROZEN DAIRY DESSERT, NO SUGAR ADDED, BUTTER PECAN, BUTTER PECAN FLAVOR WITH OTHER NATURAL FLAVORS AND PECAN PIECES, UPC: 077567281968",
+                "ndbno": "45093454",
+                "ds": "BL"
+            },
+            {
+                "offset": 26,
+                "group": "Branded Food Products Database",
+                "name": "LAKE CHAMPLAIN CHOCOLATE, ORGANIC PEANUT BUTTER CHOCOLATE, PEANUT BUTTER, UPC: 769933854929",
+                "ndbno": "45093923",
+                "ds": "BL"
+            },
+            {
+                "offset": 27,
+                "group": "Branded Food Products Database",
+                "name": "BREYERS, REESES PEANUT BUTTER ICE CREAM WITH REESE'S PEANUT BUTTER CUP PIECES AND A FUDGE SWIRL, UPC: 077567201744",
+                "ndbno": "45094132",
+                "ds": "BL"
+            },
+            {
+                "offset": 28,
+                "group": "Branded Food Products Database",
+                "name": "ESSENTIAL EVERYDAY, CRUNCHY PEANUT BUTTER GRANOLA BARS, PEANUT BUTTER, UPC: 041303001356",
+                "ndbno": "45097455",
+                "ds": "BL"
+            },
+            {
+                "offset": 29,
+                "group": "Branded Food Products Database",
+                "name": "CHOCOLOVE, SALTED ALMOND BUTTER IN DARK CHOCOLATE, ALMOND BUTTER, UPC: 716270040010",
+                "ndbno": "45099515",
+                "ds": "BL"
+            },
+            {
+                "offset": 30,
+                "group": "Branded Food Products Database",
+                "name": "PEANUT BUTTER PEANUT BUTTER COOKIES N CREAM, UPC: 076310440850",
+                "ndbno": "45101025",
+                "ds": "BL"
+            },
+            {
+                "offset": 31,
+                "group": "Branded Food Products Database",
+                "name": "ESSENTIAL EVERYDAY, LIGHT BUTTER POPCORN, LIGHT BUTTER, UPC: 041303015261",
+                "ndbno": "45108449",
+                "ds": "BL"
+            },
+            {
+                "offset": 32,
+                "group": "Branded Food Products Database",
+                "name": "JOLLY TIME, 100 CALORIE HEALTHY POP BUTTER, BUTTER, UPC: 028190001812",
+                "ndbno": "45114253",
+                "ds": "BL"
+            },
+            {
+                "offset": 33,
+                "group": "Branded Food Products Database",
+                "name": "NECCO, MARY JANE, PEANUT BUTTER KISSES CANDY, PEANUT BUTTER, UPC: 011215314790",
+                "ndbno": "45123923",
+                "ds": "BL"
+            },
+            {
+                "offset": 34,
+                "group": "Branded Food Products Database",
+                "name": "FULL CIRCLE, ORGANIC CRUNCHY PEANUT BUTTER SPREAD, PEANUT BUTTER, UPC: 036800094284",
+                "ndbno": "45138250",
+                "ds": "BL"
+            },
+            {
+                "offset": 35,
+                "group": "Branded Food Products Database",
+                "name": "FOOD CLUB, BUTTER LITE FLAVORED SYRUP, BUTTER LITE, UPC: 036800264694",
+                "ndbno": "45138345",
+                "ds": "BL"
+            },
+            {
+                "offset": 36,
+                "group": "Branded Food Products Database",
+                "name": "OLD DOMINION PEANUT COMPANY, PEANUT BUTTER DOUBLE UPS, PEANUTS, PEANUT BUTTER AND CHOCOLATE, UPC: 076138021224",
+                "ndbno": "45144034",
+                "ds": "BL"
+            },
+            {
+                "offset": 37,
+                "group": "Branded Food Products Database",
+                "name": "OLD DOMINION PEANUT COMPANY, PEANUT BUTTER DOUBLE UPS, PEANUTS, PEANUT BUTTER AND CHOCOLATE, UPC: 076138028209",
+                "ndbno": "45156970",
+                "ds": "BL"
+            },
+            {
+                "offset": 38,
+                "group": "Branded Food Products Database",
+                "name": "BLUE SKY TREATS, MATTHEW'S PEANUT BUTTER BAR, PEANUT BUTTER, UPC: 879275000653",
+                "ndbno": "45160006",
+                "ds": "BL"
+            },
+            {
+                "offset": 39,
+                "group": "Branded Food Products Database",
+                "name": "SOUTHERN HOME, PEANUT BUTTER FILLED MINI PRETZELS, PEANUT BUTTER, UPC: 607880036091",
+                "ndbno": "45160382",
+                "ds": "BL"
+            },
+            {
+                "offset": 40,
+                "group": "Branded Food Products Database",
+                "name": "SCHOOL KINE COOKIES, ALL BUTTER COOKIES, CORNFLAKE BUTTER CRUNCH, UPC: 034859300080",
+                "ndbno": "45163430",
+                "ds": "BL"
+            },
+            {
+                "offset": 41,
+                "group": "Branded Food Products Database",
+                "name": "KINGS, CHOCOLATE PEANUT BUTTER CUP POPCORN, MILK CHOCOLATE, PEANUT BUTTER, & CARAMEL, UPC: 073866105141",
+                "ndbno": "45164822",
+                "ds": "BL"
+            },
+            {
+                "offset": 42,
+                "group": "Branded Food Products Database",
+                "name": "KAR'S, PEANUT BUTTER 'N DARK CHOCOLATE MIX WITH PEANUT BUTTER CANDIES, UPC: 077034084412",
+                "ndbno": "45164967",
+                "ds": "BL"
+            },
+            {
+                "offset": 43,
+                "group": "Branded Food Products Database",
+                "name": "GARDNERS CANDIES, ORIGINAL PEANUT BUTTER MELTAWAYS, PEANUT BUTTER, UPC: 088671105217",
+                "ndbno": "45165309",
+                "ds": "BL"
+            },
+            {
+                "offset": 44,
+                "group": "Branded Food Products Database",
+                "name": "MIKE'S POPCORN, BUTTER POPCORN, BUTTER, UPC: 855762005363",
+                "ndbno": "45166932",
+                "ds": "BL"
+            },
+            {
+                "offset": 45,
+                "group": "Branded Food Products Database",
+                "name": "MAINE COUNTRY BUTTER, SALTED BUTTER, UPC: 090762000011",
+                "ndbno": "45167682",
+                "ds": "BL"
+            },
+            {
+                "offset": 46,
+                "group": "Branded Food Products Database",
+                "name": "BUTTER BELLA, GOURMET COOKIES, BUTTER WITH TURBINADO SPRINKLES, UPC: 891066001519",
+                "ndbno": "45170191",
+                "ds": "BL"
+            },
+            {
+                "offset": 47,
+                "group": "Branded Food Products Database",
+                "name": "CHALLENGE BUTTER, LACTOSE FREE CLARIFIED BUTTER WITH CANOLA OIL, UPC: 047200152801",
+                "ndbno": "45174198",
+                "ds": "BL"
+            },
+            {
+                "offset": 48,
+                "group": "Branded Food Products Database",
+                "name": "THE BAKERY, PEANUT BUTTER FUDGE, CREAMY PEANUT BUTTER, UPC: 078742121512",
+                "ndbno": "45176980",
+                "ds": "BL"
+            },
+            {
+                "offset": 49,
+                "group": "Branded Food Products Database",
+                "name": "BUTTER CUPS, SPREADABLE CREAMED BUTTER, UPC: 852996005107",
+                "ndbno": "45180431",
+                "ds": "BL"
+            },
+            {
+                "offset": 50,
+                "group": "Branded Food Products Database",
+                "name": "CREAMY BUTTER PECAN ICE CREAM WITH SALTED BUTTER PECANS, UPC: 717544207382",
+                "ndbno": "45185707",
+                "ds": "BL"
+            },
+            {
+                "offset": 51,
+                "group": "Branded Food Products Database",
+                "name": "PEANUT BUTTER ICE CREAM WITH MINI PEANUT BUTTER CUPS AND SWIRLS OF CHOCOLATE FUDGE SAUCE, UPC: 717544207405",
+                "ndbno": "45185708",
+                "ds": "BL"
+            },
+            {
+                "offset": 52,
+                "group": "Branded Food Products Database",
+                "name": "CASCO BAY BUTTER CO, TRUFFLE BUTTER, UPC: 857534005021",
+                "ndbno": "45187982",
+                "ds": "BL"
+            },
+            {
+                "offset": 53,
+                "group": "Branded Food Products Database",
+                "name": "AMISH COUNTRY BUTTER, AMISH STYLE HAND-ROLLED SALTED BUTTER, UPC: 890769002083",
+                "ndbno": "45188178",
+                "ds": "BL"
+            },
+            {
+                "offset": 54,
+                "group": "Branded Food Products Database",
+                "name": "BOGG'S TRAIL BUTTER, ALL NATURAL ENERGY NUT BUTTER, UPC: 715134255720",
+                "ndbno": "45192237",
+                "ds": "BL"
+            },
+            {
+                "offset": 55,
+                "group": "Branded Food Products Database",
+                "name": "BUTTER ME UP!, PEANUT BUTTER, HONEY ROASTED, UPC: 720825454856",
+                "ndbno": "45192259",
+                "ds": "BL"
+            },
+            {
+                "offset": 56,
+                "group": "Branded Food Products Database",
+                "name": "BUTTER ME UP!, CASHEW BUTTER, UPC: 720825454849",
+                "ndbno": "45192267",
+                "ds": "BL"
+            },
+            {
+                "offset": 57,
+                "group": "Branded Food Products Database",
+                "name": "BUTTER ME UP!, WHITE CHOCOLATE ALMOND BUTTER, UPC: 720825454917",
+                "ndbno": "45192268",
+                "ds": "BL"
+            },
+            {
+                "offset": 58,
+                "group": "Branded Food Products Database",
+                "name": "CLEAR VALUE, BUTTER FLAVORED SYRUP, BUTTER, UPC: 036800771888",
+                "ndbno": "45193104",
+                "ds": "BL"
+            },
+            {
+                "offset": 59,
+                "group": "Branded Food Products Database",
+                "name": "LOWES FOODS, CRUNCHY PEANUT BUTTER, PEANUT BUTTER, UPC: 741643021174",
+                "ndbno": "45201937",
+                "ds": "BL"
+            },
+            {
+                "offset": 60,
+                "group": "Branded Food Products Database",
+                "name": "BELMONT, BUTTER TOASTED PEANUTS, BUTTER TOASTED, UPC: 858582001300",
+                "ndbno": "45216796",
+                "ds": "BL"
+            },
+            {
+                "offset": 61,
+                "group": "Branded Food Products Database",
+                "name": "SWEET BUTTER, GREEN BUTTER LETTUCE & RED LEAF LETTUCE, UPC: 071279221038",
+                "ndbno": "45228468",
+                "ds": "BL"
+            },
+            {
+                "offset": 62,
+                "group": "Branded Food Products Database",
+                "name": "BARNEY BUTTER, ALMOND BUTTER, COCOA + COCONUT, UPC: 858864004104",
+                "ndbno": "45234021",
+                "ds": "BL"
+            },
+            {
+                "offset": 63,
+                "group": "Branded Food Products Database",
+                "name": "PEANUT BUTTER & CO, MIGHTY NUT, POWDERED PEANUT BUTTER, VANILLA, UPC: 861619000016",
+                "ndbno": "45235355",
+                "ds": "BL"
+            },
+            {
+                "offset": 64,
+                "group": "Branded Food Products Database",
+                "name": "CHOCOLATE BUTTER TOFFEE PEANUT BUTTER, UPC: 671896030107",
+                "ndbno": "45239134",
+                "ds": "BL"
+            },
+            {
+                "offset": 65,
+                "group": "Branded Food Products Database",
+                "name": "PEANUT BUTTER CUPS, SWEETENED CORN PUFF CEREAL WITH REAL PEANUT BUTTER & COCOA, UPC: 042400227762",
+                "ndbno": "45240094",
+                "ds": "BL"
+            },
+            {
+                "offset": 66,
+                "group": "Branded Food Products Database",
+                "name": "IGA, BUTTER SYRUP, BUTTER, UPC: 041270957427",
+                "ndbno": "45243610",
+                "ds": "BL"
+            },
+            {
+                "offset": 67,
+                "group": "Branded Food Products Database",
+                "name": "BREYERS, FROZEN ALMOND MILK DESSERT, VANILLA PEANUT BUTTER,  VANILLA FLAVOR WITH OTHER NATURAL FLAVORS AND A PEANUT BUTTER SWIRL, UPC: 077567674395",
+                "ndbno": "45263753",
+                "ds": "BL"
+            },
+            {
+                "offset": 68,
+                "group": "Branded Food Products Database",
+                "name": "CHOCOLATE FROZEN YOGURT WITH PEANUT BUTTER CUPS AND A PEANUT BUTTER FUDGE SWIRL, UPC: 041483041265",
+                "ndbno": "45271667",
+                "ds": "BL"
+            },
+            {
+                "offset": 69,
+                "group": "Branded Food Products Database",
+                "name": "BUTTER HARD CARAMELS, MADE WITH REAL BUTTER AND CREAM, UPC: 072976138179",
+                "ndbno": "45280594",
+                "ds": "BL"
+            },
+            {
+                "offset": 70,
+                "group": "Branded Food Products Database",
+                "name": "BUCKEYE BROWNIE PEANUT BUTTER ICE CREAM SWIRLED WITH THICK PEANUT BUTTER AND CHOCOLATE BROWNIE BITES, UPC: 070682100527",
+                "ndbno": "45286606",
+                "ds": "BL"
+            },
+            {
+                "offset": 71,
+                "group": "Branded Food Products Database",
+                "name": "BARNEY BUTTER ALMOND BUTTER HONEY + FLAX, UPC: 858864004401",
+                "ndbno": "45286955",
+                "ds": "BL"
+            },
+            {
+                "offset": 72,
+                "group": "Branded Food Products Database",
+                "name": "MURRAY, SUGAR FREE PEANUT BUTTER COOKIES, PEANUT BUTTER, UPC: 082011913319",
+                "ndbno": "45292671",
+                "ds": "BL"
+            },
+            {
+                "offset": 73,
+                "group": "Legumes and Legume Products",
+                "name": "Peanut butter, reduced sodium",
+                "ndbno": "42291",
+                "ds": "SR"
+            },
+            {
+                "offset": 74,
+                "group": "Baked Products",
+                "name": "Croissants, butter",
+                "ndbno": "18239",
+                "ds": "SR"
+            },
+            {
+                "offset": 75,
+                "group": "Dairy and Egg Products",
+                "name": "Butter, salted",
+                "ndbno": "01001",
+                "ds": "SR"
+            },
+            {
+                "offset": 76,
+                "group": "Dairy and Egg Products",
+                "name": "Butter, whipped, with salt",
+                "ndbno": "01002",
+                "ds": "SR"
+            },
+            {
+                "offset": 77,
+                "group": "Dairy and Egg Products",
+                "name": "Butter oil, anhydrous",
+                "ndbno": "01003",
+                "ds": "SR"
+            },
+            {
+                "offset": 78,
+                "group": "Dairy and Egg Products",
+                "name": "Butter, without salt",
+                "ndbno": "01145",
+                "ds": "SR"
+            },
+            {
+                "offset": 79,
+                "group": "Fats and Oils",
+                "name": "Oil, cocoa butter",
+                "ndbno": "04501",
+                "ds": "SR"
+            },
+            {
+                "offset": 80,
+                "group": "Fats and Oils",
+                "name": "Oil, nutmeg butter",
+                "ndbno": "04572",
+                "ds": "SR"
+            },
+            {
+                "offset": 81,
+                "group": "Fats and Oils",
+                "name": "Oil, ucuhuba butter",
+                "ndbno": "04573",
+                "ds": "SR"
+            },
+            {
+                "offset": 82,
+                "group": "Nut and Seed Products",
+                "name": "Seeds, sesame butter, paste",
+                "ndbno": "12169",
+                "ds": "SR"
+            },
+            {
+                "offset": 83,
+                "group": "Sweets",
+                "name": "Fruit butters, apple",
+                "ndbno": "19294",
+                "ds": "SR"
+            },
+            {
+                "offset": 84,
+                "group": "Fats and Oils",
+                "name": "Butter, light, stick, with salt",
+                "ndbno": "04601",
+                "ds": "SR"
+            },
+            {
+                "offset": 85,
+                "group": "Fats and Oils",
+                "name": "Butter, light, stick, without salt",
+                "ndbno": "04602",
+                "ds": "SR"
+            },
+            {
+                "offset": 86,
+                "group": "Fats and Oils",
+                "name": "Butter replacement, without fat, powder",
+                "ndbno": "43214",
+                "ds": "SR"
+            },
+            {
+                "offset": 87,
+                "group": "Nut and Seed Products",
+                "name": "Seeds, sunflower seed butter, without salt",
+                "ndbno": "12040",
+                "ds": "SR"
+            },
+            {
+                "offset": 88,
+                "group": "Nut and Seed Products",
+                "name": "Nuts, cashew butter, plain, without salt added",
+                "ndbno": "12088",
+                "ds": "SR"
+            },
+            {
+                "offset": 89,
+                "group": "Nut and Seed Products",
+                "name": "Nuts, almond butter, plain, without salt added",
+                "ndbno": "12195",
+                "ds": "SR"
+            },
+            {
+                "offset": 90,
+                "group": "Nut and Seed Products",
+                "name": "Seeds, sunflower seed butter, with salt added",
+                "ndbno": "12540",
+                "ds": "SR"
+            },
+            {
+                "offset": 91,
+                "group": "Nut and Seed Products",
+                "name": "Nuts, cashew butter, plain, with salt added",
+                "ndbno": "12588",
+                "ds": "SR"
+            },
+            {
+                "offset": 92,
+                "group": "Nut and Seed Products",
+                "name": "Nuts, almond butter, plain, with salt added",
+                "ndbno": "12695",
+                "ds": "SR"
+            },
+            {
+                "offset": 93,
+                "group": "Nut and Seed Products",
+                "name": "Seeds, sesame butter, tahini, type of kernels unspecified",
+                "ndbno": "12698",
+                "ds": "SR"
+            },
+            {
+                "offset": 94,
+                "group": "Legumes and Legume Products",
+                "name": "Peanut butter, smooth, reduced fat",
+                "ndbno": "16150",
+                "ds": "SR"
+            },
+            {
+                "offset": 95,
+                "group": "Legumes and Legume Products",
+                "name": "USDA Commodity, Peanut Butter, smooth",
+                "ndbno": "16167",
+                "ds": "SR"
+            },
+            {
+                "offset": 96,
+                "group": "Baked Products",
+                "name": "Cookies, butter, commercially prepared, enriched",
+                "ndbno": "18155",
+                "ds": "SR"
+            },
+            {
+                "offset": 97,
+                "group": "Baked Products",
+                "name": "Cookies, peanut butter, refrigerated dough",
+                "ndbno": "18187",
+                "ds": "SR"
+            },
+            {
+                "offset": 98,
+                "group": "Baked Products",
+                "name": "Cookies, peanut butter sandwich, regular",
+                "ndbno": "18190",
+                "ds": "SR"
+            },
+            {
+                "offset": 99,
+                "group": "Baked Products",
+                "name": "Cookies, butter, commercially prepared, unenriched",
+                "ndbno": "18421",
+                "ds": "SR"
+            }
+        ]
+    }
+
+}

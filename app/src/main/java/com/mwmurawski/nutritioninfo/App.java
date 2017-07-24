@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.mwmurawski.nutritioninfo.di.component.ApplicationComponent;
 import com.mwmurawski.nutritioninfo.di.component.DaggerApplicationComponent;
+import com.mwmurawski.nutritioninfo.di.module.ApplicationModule;
 
 public class App extends Application {
 
@@ -12,14 +13,17 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        applicationComponent = DaggerApplicationComponent
-                .builder()
-//                .
-                .build();
-//        applicationComponent.inject(this);
+        applicationComponent = createComponent();
     }
 
     public ApplicationComponent getApplicationComponent(){
         return applicationComponent;
+    }
+
+    public ApplicationComponent createComponent(){
+        return DaggerApplicationComponent
+                .builder()
+                .applicationModule(new ApplicationModule())
+                .build();
     }
 }

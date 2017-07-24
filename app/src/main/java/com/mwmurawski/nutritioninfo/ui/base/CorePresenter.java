@@ -11,13 +11,13 @@ public abstract class CorePresenter {
     private ApplicationComponent applicationComponent;
 
     private CompositeDisposable compositeDisposable;
-    private SchedulerProvider schedulerProvider;
+    private SchedulerProvider scheduler;
 
     public CorePresenter() {
         applicationComponent = DaggerApplicationComponent.builder().build();
         applicationComponent.inject(this);
 
-        setSchedulerProvider(applicationComponent.getSchedulerProvider());
+        setScheduler(applicationComponent.getSchedulerProvider());
         setCompositeDisposable(applicationComponent.getCompositeDisposable());
     }
 
@@ -29,12 +29,12 @@ public abstract class CorePresenter {
         this.compositeDisposable = compositeDisposable;
     }
 
-    public SchedulerProvider getSchedulerProvider() {
-        return schedulerProvider;
+    public SchedulerProvider getScheduler() {
+        return scheduler;
     }
 
-    public void setSchedulerProvider(SchedulerProvider schedulerProvider) {
-        this.schedulerProvider = schedulerProvider;
+    public void setScheduler(SchedulerProvider scheduler) {
+        this.scheduler = scheduler;
     }
 
     public ApplicationComponent getApplicationComponent() {

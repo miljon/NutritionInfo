@@ -1,12 +1,12 @@
 package com.mwmurawski.nutritioninfo.ui.main;
 
+import com.mwmurawski.nutritioninfo.NetworkTestHelper;
 import com.mwmurawski.nutritioninfo.data.db.model.search.SearchItem;
 import com.mwmurawski.nutritioninfo.data.db.model.search.SearchList;
 import com.mwmurawski.nutritioninfo.data.db.model.search.SearchResult;
 import com.mwmurawski.nutritioninfo.data.repository.SearchRepository;
-import com.mwmurawski.nutritioninfo.test.TestNetworkProviders;
-import com.mwmurawski.nutritioninfo.test.TestSchedulerProvider;
 import com.mwmurawski.nutritioninfo.utils.AppConstants;
+import com.mwmurawski.nutritioninfo.utils.rx.schedulers.TestSchedulerProvider;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -30,6 +30,7 @@ import static junit.framework.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.contains;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -41,8 +42,6 @@ public class MainActivityPresenterTest {
 
     @Rule public MockitoRule mockitoRule = MockitoJUnit.rule();
 
-    @Mock SearchRepository searchRepository;
-
     @Mock SearchItem searchItem;
     @Mock SearchList searchList;
     @Mock MainView view;
@@ -52,7 +51,7 @@ public class MainActivityPresenterTest {
     private TestScheduler testScheduler;
     private MainPresenter presenter;
 
-    private SearchRepository searchRepositoryMockServer;
+    private SearchRepository searchRepository;
 
     private MockWebServer server;
     private Buffer buffer;
@@ -61,13 +60,14 @@ public class MainActivityPresenterTest {
     public void setUp() throws Exception {
         testScheduler = new TestScheduler();
 
+        NetworkTestHelper networkTestHelper = new NetworkTestHelper();
+        server = networkTestHelper.provideMwMockWebServer();
+        searchRepository = new SearchRepository(networkTestHelper.provideRetrofit());
+
         presenter = new MainPresenter(searchRepository);
-        presenter.setSchedulerProvider(new TestSchedulerProvider(testScheduler));
+        presenter.setScheduler(new TestSchedulerProvider(testScheduler));
         presenter.setCompositeDisposable(new CompositeDisposable());
         presenter.bindView(view);
-
-        server = new MockWebServer();
-        searchRepositoryMockServer = new SearchRepository(TestNetworkProviders.getRetrofit(server));
 
         buffer = new Buffer();
     }
@@ -85,25 +85,25 @@ public class MainActivityPresenterTest {
 
         buffer.writeAll(Okio.source(getClass().getClassLoader().getResourceAsStream(RESPONSE_FILE)));
         server.enqueue(new MockResponse().setBody(buffer));
-        when(searchRepository.getSearchResult("Butter")).thenReturn(searchRepositoryMockServer.getSearchResult("Butter"));
 
         presenter.setQueryString("Butter");
         presenter.loadSearchResponse();
 
         testScheduler.triggerActions(); //triggers rxJava action
 
-        assertEquals(presenter.getItemList().get(0).getNdbno(), "45093459");
-
         verify(view).showProgressBar();
         verify(view).hideProgressBar();
         verify(view).putListToAdapter((List<SearchItem>) any());
+
+        assertEquals(presenter.getItemList().get(0).getNdbno(), "45093459");
+        assertEquals(presenter.getItemList().size(), 100);
+
     }
 
     @Test
     public void loadResponse_success_empty() throws Exception {
         buffer.writeAll(Okio.source(getClass().getClassLoader().getResourceAsStream(RESPONSE_ERROR_FILE)));
         server.enqueue(new MockResponse().setBody(buffer));
-        when(searchRepository.getSearchResult("Butter")).thenReturn(searchRepositoryMockServer.getSearchResult("Butter"));
 
         presenter.setQueryString("Butter");
         presenter.loadSearchResponse();
@@ -118,7 +118,6 @@ public class MainActivityPresenterTest {
     @Test
     public void loadResponse_error() throws Exception {
         server.enqueue(new MockResponse().setBody(String.valueOf(Single.just(new Throwable("Error")))));
-        when(searchRepository.getSearchResult("Butter")).thenReturn(searchRepositoryMockServer.getSearchResult("Butter"));
 
         presenter.setQueryString("Butter");
         presenter.loadSearchResponse();
@@ -168,5 +167,28 @@ public class MainActivityPresenterTest {
         List<SearchItem> searchItems = new ArrayList<>();
         presenter.setItemList(new ArrayList<SearchItem>());
         assertEquals(presenter.getItemList(), searchItems);
+    }
+
+    @Test
+    public void formatNameToAdapter() throws Exception {
+        String inputString;
+        String outputString;
+        String formattedString;
+        SearchItem searchItem = mock(SearchItem.class);
+
+        //1
+        inputString = "PLUM, MASHUPS, ORGANIC APPLE SAUCE + STRAWBERRIES & BANANAS, STRAWBERRY BANANA!, UPC: 846675002198";
+        outputString = "Plum\nMashups\nOrganic apple sauce + strawberries & bananas\nStrawberry banana!";
+        when(searchItem.getName()).thenReturn(inputString);
+        formattedString = presenter.formatNameToAdapter(searchItem);
+        assertEquals(outputString, formattedString);
+
+        //2
+        inputString = "AHOLD, HARICOTS VERTS LIGHTLY SEASONED FRENCH GREEN BEANS WITH FINISHING BUTTER, UPC: 688267136344";
+        outputString = "Ahold\nHaricots verts lightly seasoned french green beans with finishing butter";
+        when(searchItem.getName()).thenReturn(inputString);
+        formattedString = presenter.formatNameToAdapter(searchItem);
+        assertEquals(outputString, formattedString);
+
     }
 }

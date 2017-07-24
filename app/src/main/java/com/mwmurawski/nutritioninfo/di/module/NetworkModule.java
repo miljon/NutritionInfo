@@ -18,8 +18,7 @@ public class NetworkModule {
     @ApplicationScope
     @Provides
     Gson provideGson() {
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        return gsonBuilder.create();
+        return new GsonBuilder().create();
     }
 
     @ApplicationScope
@@ -34,7 +33,7 @@ public class NetworkModule {
 
     @ApplicationScope
     @Provides
-    SearchRepository provideSearchRepository(Retrofit retrofit){
+    SearchRepository provideSearchRepository(Retrofit retrofit) {
         return new SearchRepository(retrofit);
     }
 }
