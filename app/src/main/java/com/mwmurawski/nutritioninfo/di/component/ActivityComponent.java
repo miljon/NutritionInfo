@@ -20,19 +20,19 @@ import dagger.Component;
         modules = {ActivityModule.class, PresenterModule.class})
 public interface ActivityComponent {
 
+    PresenterCache getPresenterCache();
+
     //activities
     void inject(MainActivity activity);
     void inject(FoodDetailsActivity activity);
+
+    MainPresenter getMainPresenter();
+    FoodDetailsPresenter getFoodDetailsPresenter();
 
     //adapters
     void inject(ItemAdapter itemAdapter);
     void inject(ItemDetailsAdapter itemDetailsAdapter);
 
-    MainPresenter getMainPresenter();
-    FoodDetailsPresenter getFoodDetailsPresenter();
-
     ItemAdapterView getItemAdapter();
     ItemDetailsAdapterView getIDetailsAdapter();
-
-    PresenterCache getPresenterCache();
 }

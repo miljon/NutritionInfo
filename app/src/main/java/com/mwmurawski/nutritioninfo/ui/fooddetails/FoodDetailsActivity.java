@@ -21,9 +21,9 @@ import butterknife.BindView;
 
 public class FoodDetailsActivity extends BaseActivity<FoodDetailsPresenter> implements FoodDetailsView {
 
-    @BindView(R.id.details_info) TextView detailsInfo;
-    @BindView(R.id.details_recyclerview) RecyclerView detailsRecyclerView;
-    @BindView(R.id.progress_bar) ProgressBar progressBar;
+    @BindView(R.id.details_info)            TextView detailsInfo;
+    @BindView(R.id.details_recyclerview)    RecyclerView detailsRecyclerView;
+    @BindView(R.id.progress_bar)            ProgressBar progressBar;
 
     @Inject ItemDetailsAdapterView itemAdapter;
 

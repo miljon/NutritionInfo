@@ -23,6 +23,23 @@ public class MainPresenter extends BasePresenter<MainView> {
     private String queryString = null;
     private List<SearchItem> itemList;
 
+    private void handleSearchResponse(SearchResult searchResult) {
+        if (searchResult != null
+                && searchResult.getSearchList() != null
+                && searchResult.getSearchList().getSearchItems() != null
+                && !searchResult.getSearchList().getSearchItems().isEmpty()
+                ) {
+            itemList = searchResult.getSearchList().getSearchItems();
+            getView().putListToAdapter(itemList);
+        } else {
+            handleError(new Throwable(AppConstants.EMPTY_RESPONSE), AppConstants.EMPTY_RESPONSE);
+        }
+    }
+
+    private void makeToast(String toastText) {
+        getView().makeToast(toastText);
+    }
+
     @Inject
     public MainPresenter(SearchRepository searchRepository) {
         this.searchRepository = searchRepository;
@@ -67,23 +84,6 @@ public class MainPresenter extends BasePresenter<MainView> {
                         handleError(e, AppConstants.OBSERVER_PROBLEM);
                     }
                 }));
-    }
-
-    private void handleSearchResponse(SearchResult searchResult) {
-        if (searchResult != null
-                && searchResult.getSearchList() != null
-                && searchResult.getSearchList().getSearchItems() != null
-                && !searchResult.getSearchList().getSearchItems().isEmpty()
-                ) {
-            itemList = searchResult.getSearchList().getSearchItems();
-            getView().putListToAdapter(itemList);
-        } else {
-            handleError(new Throwable(AppConstants.EMPTY_RESPONSE), AppConstants.EMPTY_RESPONSE);
-        }
-    }
-
-    private void makeToast(String toastText) {
-        getView().makeToast(toastText);
     }
 
     /**

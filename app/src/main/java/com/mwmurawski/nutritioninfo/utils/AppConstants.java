@@ -3,11 +3,11 @@ package com.mwmurawski.nutritioninfo.utils;
 import com.mwmurawski.nutritioninfo.BuildConfig;
 
 public class AppConstants {
+
+    public static String BASE_URL = "https://api.nal.usda.gov/ndb/"; //not final because in tests we switch it to mock
+
     public static final String API_KEY = BuildConfig.API_KEY;
-
     public static final String JSON = "json";
-
-    public static String BASE_URL = "https://api.nal.usda.gov/ndb/";
 
     //=== ERROR STRINGS ===
     public static final String EMPTY_STRING = "Error: empty text";

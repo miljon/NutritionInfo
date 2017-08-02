@@ -9,7 +9,6 @@ import io.reactivex.disposables.CompositeDisposable;
 public abstract class CorePresenter {
 
     private ApplicationComponent applicationComponent;
-
     private CompositeDisposable compositeDisposable;
     private SchedulerProvider scheduler;
 

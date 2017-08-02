@@ -17,6 +17,9 @@ public abstract class BasePresenter<T extends BaseView> extends CorePresenter{
         }
     }
 
+    /**
+     * Unbinds the view from a presenter.
+     */
     public void unbindView() {
         viewReference = null;
         getCompositeDisposable().clear();
@@ -24,7 +27,7 @@ public abstract class BasePresenter<T extends BaseView> extends CorePresenter{
 
     /**
      * Method checks if view is binded
-      * @return true if view is binded, false if it's not
+     * @return true if view is binded, false if it's not
      */
     public boolean isViewBinded(){
         return viewReference != null && viewReference.get() != null;

@@ -48,10 +48,6 @@ public class CustomTestRule<E extends Activity> extends IntentsTestRule<E> {
     @Override
     protected void afterActivityFinished() {
         super.afterActivityFinished();
-//        try {
-//            mockWebServer.shutdown();
-//        } catch (IOException e) {
-//            throw new IllegalStateException(e.getMessage());
-//        }
+
     }
 }

@@ -18,7 +18,7 @@ import dagger.Module;
 import dagger.Provides;
 
 @Module
-public class ActivityModule{
+public class ActivityModule {
 
     private AppCompatActivity activity;
 
@@ -40,13 +40,13 @@ public class ActivityModule{
 
     @Provides
     @ActivityScope
-    ItemAdapterView provideItemAdapterInterface(MainPresenter presenter){
+    ItemAdapterView provideItemAdapterInterface(MainPresenter presenter) {
         return new ItemAdapter(presenter);
     }
 
     @Provides
     @ActivityScope
-    ItemDetailsAdapterView provideItemDetailsAdapterInterface(FoodDetailsPresenter presenter){
+    ItemDetailsAdapterView provideItemDetailsAdapterInterface(FoodDetailsPresenter presenter) {
         return new ItemDetailsAdapter(new ArrayList<Nutrient>(), presenter);
     }
 }

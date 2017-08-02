@@ -21,13 +21,13 @@ public class ApplicationModule {
 
     @ApplicationScope
     @Provides
-    CompositeDisposable provideCompositeDisposable(){
+    CompositeDisposable provideCompositeDisposable() {
         return new CompositeDisposable();
     }
 
     @ApplicationScope
     @Provides
-    SchedulerProvider provideScheduler(){
+    SchedulerProvider provideScheduler() {
         return new AppSchedulerProvider();
     }
 }

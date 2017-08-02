@@ -16,8 +16,6 @@ import butterknife.ButterKnife;
 
 public abstract class BaseActivity<T extends BasePresenter> extends AppCompatActivity implements BaseView {
 
-//    protected PresenterProviderInterface<T> presenterProviderInterface;
-
     protected T presenter;
 
     private ActivityComponent activityComponent;
@@ -43,6 +41,10 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         ButterKnife.bind(this);
     }
 
+    /**
+     * Restoring presenter
+     * @return
+     */
     @SuppressWarnings("unchecked")
     private boolean restoreOrCreatePresenter() {
         presenter = getPresenterCache().getPresenter(getClass().getName());

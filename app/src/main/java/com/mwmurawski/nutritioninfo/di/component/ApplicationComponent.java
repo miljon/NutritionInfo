@@ -17,19 +17,12 @@ import io.reactivex.disposables.CompositeDisposable;
 public interface ApplicationComponent {
 
     void inject(App application);
-
     void inject(CorePresenter corePresenter);
 
     PresenterCache getPresenterCache();
-
     CompositeDisposable getCompositeDisposable();
-
     SchedulerProvider getSchedulerProvider();
 
     //repositories
     SearchRepository getSearchRepository();
-
-//    void inject(MainPresenter presenter);
-//
-//    void inject(FoodDetailsPresenter presenter);
 }

@@ -44,22 +44,40 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
         setPresenter(getActivityComponent().getMainPresenter());
     }
 
-
     @Override
     public void assignPresenterValuesToViewAfterRestore() {
         itemAdapter.setPresenter(presenter);
         itemAdapter.setData(presenter.getItemList());
         searchView.setSearchText(presenter.getQueryString());
-
     }
 
-//    ________LIFE CYCLE METHODS________
+    @Override
+    public void startDetailsActivity(final String ndbno) {
+        Intent intent = new Intent(this, FoodDetailsActivity.class);
+        intent.putExtra("ndbno", ndbno);
+        startActivity(intent);
+    }
+
+    @Override
+    public void putListToAdapter(List<SearchItem> searchItems) {
+        itemAdapter.setData(searchItems);
+        recyclerView.setAdapter((RecyclerView.Adapter) itemAdapter);
+    }
+
+    @Override
+    public void showProgressBar() {
+        swipeRefreshLayout.setRefreshing(true);
+    }
+
+    @Override
+    public void hideProgressBar() {
+        swipeRefreshLayout.setRefreshing(false);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //bindView
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
 
@@ -88,7 +106,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
     @Override
     protected void onStop() {
         super.onStop();
-
     }
 
     //onRestart
@@ -98,10 +115,10 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
         super.onDestroy();
     }
 
-    /*
-    ________ CUSTOM METHODS ________
+    /**
+     * Sets listener onFocusCleared, when search bar lost focus, takes text and do call to API.
+     * Also sets listener onSearchTextChanged to always have latest value of text for use in API call.
      */
-
     private void setSearchListener() {
         searchView.setOnFocusChangeListener(new FloatingSearchView.OnFocusChangeListener() {
             @Override
@@ -121,7 +138,9 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
         });
     }
 
-
+    /**
+     * Sets down swipe listener for refresh results. Makes new API call when user refresh list.
+     */
     private void setSwipeSearchListener() {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -129,32 +148,5 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
                 presenter.loadSearchResponse();
             }
         });
-    }
-
-    /*
-    ________PRESENTER METHODS________
-     */
-
-    @Override
-    public void startDetailsActivity(final String ndbno) {
-        Intent intent = new Intent(this, FoodDetailsActivity.class);
-        intent.putExtra("ndbno", ndbno);
-        startActivity(intent);
-    }
-
-    @Override
-    public void putListToAdapter(List<SearchItem> searchItems) {
-        itemAdapter.setData(searchItems);
-        recyclerView.setAdapter((RecyclerView.Adapter) itemAdapter);
-    }
-
-    @Override
-    public void showProgressBar() {
-        swipeRefreshLayout.setRefreshing(true);
-    }
-
-    @Override
-    public void hideProgressBar() {
-        swipeRefreshLayout.setRefreshing(false);
     }
 }

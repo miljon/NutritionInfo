@@ -24,8 +24,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
     private List<SearchItem> listOfItems;
     private MainPresenter presenter;
 
-//    private Single<String> single;
-
     public ItemAdapter(MainPresenter presenter) {
         this.presenter = presenter;
         listOfItems = new ArrayList<>();
