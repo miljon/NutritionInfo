@@ -1,0 +1,11 @@
+{
+    "errors": {
+        "error": [
+            {
+                "status": 400,
+                "parameter": "results",
+                "message": "Your search resulted in zero results.Change your parameters and try again"
+            }
+        ]
+    }
+}
