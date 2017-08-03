@@ -20,8 +20,8 @@ public class MainPresenter extends BasePresenter<MainView> {
     private SearchRepository searchRepository;
 
     //Activity values to operate and restore
-    private String queryString = null;
-    private List<SearchItem> itemList;
+    private String queryString = null; //restore
+    private List<SearchItem> itemList; //restore
 
     private void handleSearchResponse(SearchResult searchResult) {
         if (searchResult != null

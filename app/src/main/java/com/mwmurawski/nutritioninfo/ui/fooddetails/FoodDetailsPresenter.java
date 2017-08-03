@@ -18,7 +18,8 @@ import io.reactivex.observers.DisposableSingleObserver;
 public class FoodDetailsPresenter extends BasePresenter<FoodDetailsView> {
 
     private final SearchRepository searchRepository;
-    private List<Nutrient> nutrientList;
+    private List<Nutrient> nutrientList; //restore
+    private String formattedName; //restore
 
     @Inject
     public FoodDetailsPresenter(SearchRepository searchRepository) {
@@ -58,7 +59,7 @@ public class FoodDetailsPresenter extends BasePresenter<FoodDetailsView> {
                     @Override
                     public void onSuccess(@NonNull FoodReport foodReport) {
                         getView().hideProgressBar();
-                        String formattedName = formatFoodName(foodReport.getReport().getFood().getName());
+                        formattedName = formatFoodName(foodReport.getReport().getFood().getName());
                         nutrientList = foodReport.getReport().getFood().getNutrients();
                         getView().showNutritionDetails(formattedName, nutrientList);
                     }
@@ -95,5 +96,13 @@ public class FoodDetailsPresenter extends BasePresenter<FoodDetailsView> {
      */
     List<Nutrient> getItemList() {
         return nutrientList;
+    }
+
+    /**
+     * Gets formatted name, new line with every coma
+     * @return formatted name to show in textView
+     */
+    public String getFormattedName() {
+        return formattedName;
     }
 }

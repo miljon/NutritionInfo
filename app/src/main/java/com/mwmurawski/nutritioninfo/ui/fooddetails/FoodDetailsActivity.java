@@ -32,17 +32,19 @@ public class FoodDetailsActivity extends BaseActivity<FoodDetailsPresenter> impl
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
 
         Intent intent = getIntent();
         ndbno = intent.getStringExtra("ndbno");
 
         detailsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         detailsRecyclerView.hasFixedSize();
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        presenter.bindView(this);
         detailsRecyclerView.setAdapter((RecyclerView.Adapter) itemAdapter);
 
         presenter.loadNutritionDetails(ndbno);
@@ -67,6 +69,7 @@ public class FoodDetailsActivity extends BaseActivity<FoodDetailsPresenter> impl
     public void assignPresenterValuesToViewAfterRestore() {
         itemAdapter.setPresenter(presenter);
         itemAdapter.setData(presenter.getItemList());
+        detailsInfo.setText(presenter.getFormattedName());
     }
 
     @Override
