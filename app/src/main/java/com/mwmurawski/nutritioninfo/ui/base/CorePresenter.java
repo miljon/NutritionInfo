@@ -20,7 +20,7 @@ public abstract class CorePresenter {
         setCompositeDisposable(applicationComponent.getCompositeDisposable());
     }
 
-    protected CompositeDisposable getCompositeDisposable(){
+    protected CompositeDisposable getCompositeDisposable() {
         return compositeDisposable;
     }
 

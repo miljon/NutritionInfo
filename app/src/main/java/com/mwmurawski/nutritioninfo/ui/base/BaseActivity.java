@@ -60,20 +60,23 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         }
     }
 
-    protected void setPresenter(T presenter){
-        this.presenter = presenter;
-    }
-
     @LayoutRes
     protected abstract int getLayoutFile();
 
     /**
-     * Inject all components for this class.
+     * Inject component for this class.
      */
     protected abstract void inject();
 
+    /**
+     * Specifically inject presenter from a component.
+     * LookUp other activities to see how.
+     */
     protected abstract void injectPresenter();
 
+    /**
+     * Assign values that presenter stores to a activity when it's recreated (for example when orientation changes)
+     */
     public abstract void assignPresenterValuesToViewAfterRestore();
 
     @Override
@@ -102,15 +105,36 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         presenter.unbindView();
     }
 
+    /**
+     * Makes toast on the device, only short length.
+     * @param toastText toast message
+     */
     public void makeToast(String toastText) {
         Toast.makeText(getApplicationContext(), toastText, Toast.LENGTH_SHORT).show();
     }
 
-    public PresenterCache getPresenterCache(){
+    /**
+     * Get presenter cache to check if there presenter stored
+     * @return presenter cache
+     */
+    public PresenterCache getPresenterCache() {
         return activityComponent.getPresenterCache();
     }
 
+    /**
+     * Get presenter to access presenter method.
+     * For test purpose
+     * @return specific presenter
+     */
     public T getPresenter() {
         return presenter;
+    }
+
+    /**
+     * Set presenter to match a activity
+     * @param presenter presenter to set
+     */
+    protected void setPresenter(T presenter) {
+        this.presenter = presenter;
     }
 }

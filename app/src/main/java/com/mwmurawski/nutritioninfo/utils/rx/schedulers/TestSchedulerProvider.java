@@ -3,6 +3,10 @@ package com.mwmurawski.nutritioninfo.utils.rx.schedulers;
 import io.reactivex.Scheduler;
 import io.reactivex.schedulers.TestScheduler;
 
+/**
+ * Only for tests.
+ * Every method returns the same testScheduler.
+ */
 public class TestSchedulerProvider implements SchedulerProvider {
 
     private final TestScheduler testScheduler;
