@@ -1,4 +1,4 @@
-## To get fully working app:
+## To get fully working app
 
 1. Register on USDA Food Composition Database https://ndb.nal.usda.gov/ndb/doc/index
 2. Get API key
@@ -9,19 +9,19 @@ Example of proper implementation key-value API key:
 ```
 API_KEY="yourApiKey"
 ```
-## USED TECHNOLOGIES:
+## USED TECHNOLOGIES
 
-1. Architecture
+**1. Architecture**
   - MVP
   - Clean Code
 
-2. Frameworks and libs:
+**2. Frameworks and libs:**
   - Dagger 2
   - RxJava 2
   - Retrofit 2
   - ButterKnife
 
-3. Tests: 
+**3. Tests: **
   - Expresso
   - JUnit
   - Mockito
