@@ -21,7 +21,7 @@ API_KEY="yourApiKey"
   - Retrofit 2
   - ButterKnife
 
-**3. Tests: **
+**3. Tests:**
   - Expresso
   - JUnit
   - Mockito
