@@ -11,17 +11,21 @@ API_KEY="yourApiKey"
 ```
 ## USED TECHNOLOGIES:
 
-- MVP
-- Clean Code
-.
-- Dagger 2
-- RxJava 2
-- Retrofit 2
-- ButterKnife
-.
-- Expresso
-- JUnit
-- Mockito
-- MockWebServer
-.
-* Expresso requires switching off animation in phone
+1. Architecture
+  - MVP
+  - Clean Code
+
+2. Frameworks and libs:
+  - Dagger 2
+  - RxJava 2
+  - Retrofit 2
+  - ButterKnife
+
+3. Tests: 
+  - Expresso
+  - JUnit
+  - Mockito
+  - MockWebServer
+
+## Other
+- Expresso requires switching off animation in phone
