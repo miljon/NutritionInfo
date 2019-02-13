@@ -1,4 +1,6 @@
-## To get fully working app
+## Currently closed
+
+## API key is notprovided due to limitation of requestes.. To get fully working app
 
 1. Register on USDA Food Composition Database https://ndb.nal.usda.gov/ndb/doc/index
 2. Get API key
